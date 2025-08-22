@@ -1,5 +1,5 @@
 import type { JSXAttribute, JSXOpeningElement, Node } from "estree-jsx";
-import type { Parser } from "prettier";
+import type { Parser, Plugin } from "prettier";
 import rawBabelParsers from "prettier/parser-babel";
 import rawTsParsers from "prettier/parser-typescript";
 
@@ -87,9 +87,14 @@ function withParser(parser: Parser): Parser {
   };
 }
 
-export const parsers: Record<string, Parser> = {
-  ...babelParsers,
-  ["babel"]: withParser(babelParsers["babel"]),
-  ["babel-ts"]: withParser(babelParsers["babel-ts"]),
-  ["typescript"]: withParser(tsParsers["typescript"]),
-};
+const plugin: Plugin = {
+  options: {},
+  parsers: {
+    ...babelParsers,
+    ["babel"]: withParser(babelParsers["babel"]),
+    ["babel-ts"]: withParser(babelParsers["babel-ts"]),
+    ["typescript"]: withParser(tsParsers["typescript"]),
+  },
+}
+
+export default plugin
