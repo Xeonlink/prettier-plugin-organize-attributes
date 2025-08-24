@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from "fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { readFile } from "fs/promises";
 import pathUtil from "path";
 
@@ -25,13 +25,13 @@ export class Path {
    *
    * @example
    * ```ts
-   * new Path("a", "b", "c.txt").basename; // "c"
-   * new Path("a", "b", "c").basename; // "c"
-   * new Path("a", "b", "c.txt.js").basename; // "c.txt.js"
-   * new Path("a", "b", ".").basename; // "b"
+   * new Path("a", "b", "c.txt").fullname; // "c.txt"
+   * new Path("a", "b", "c").fullname; // "c"
+   * new Path("a", "b", "c.txt.js").fullname; // "c.txt.js"
+   * new Path("a", "b", ".").fullname; // "b"
    * ```
    */
-  public get basename() {
+  public get name() {
     return pathUtil.basename(this.full);
   }
 
@@ -48,19 +48,6 @@ export class Path {
    */
   public get ext() {
     return pathUtil.extname(this.full);
-  }
-
-  /**
-   * 확장자를 포함한 파일이나 디렉토리의 이름
-   *
-   * @example
-   * ```ts
-   * new Path("a", "b", "c.txt").name; // "c.txt"
-   * new Path("a", "b", "c").name; // "c"
-   * new Path("a", "b", "c.txt.js").name; // "c.txt.js"
-   */
-  public get name() {
-    return this.basename + this.ext;
   }
 
   /**
@@ -94,6 +81,13 @@ export class Path {
    */
   public get isFile() {
     return statSync(this.full).isFile();
+  }
+
+  /**
+   * 현재 경로가 존재하는지 여부
+   */
+  public get exists() {
+    return existsSync(this.full);
   }
 
   /**
@@ -166,9 +160,9 @@ export class Path {
   /**
    * 현재 경로와 다른 경로의 상대 경로를 반환
    */
-  public relativeTo(path: Path) {
-    const relativePath = pathUtil.relative(this.full, path.full);
-    return new Path(relativePath);
+  public relativeTo(path: Path | string) {
+    const stringPath = typeof path === "string" ? path : path.full;
+    return new Path(pathUtil.relative(this.full, stringPath));
   }
 
   /**

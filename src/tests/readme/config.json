@@ -1,0 +1,3 @@
+{
+  "attributeGroups": ["/^class$/", "/^(id|name)$/", "/^src$/", "/^aria-/"]
+}

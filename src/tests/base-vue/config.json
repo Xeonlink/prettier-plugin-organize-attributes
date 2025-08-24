@@ -1,0 +1,7 @@
+{
+  "vueIndentScriptAndStyle": false,
+
+  "plugins": ["prettier-plugin-vue"],
+
+  "attributeGroups": ["$VUE"]
+}
