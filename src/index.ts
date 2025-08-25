@@ -1,34 +1,28 @@
-import { withEstreeModifier } from "./ast/estree";
-import { withHtmlModifier } from "./ast/html";
-import type { PluginConfig } from "./options";
-import { supportOptions } from "./options";
 import type { Plugin } from "prettier";
-import babelParsers from "prettier/parser-babel";
-import htmlParsers from "prettier/parser-html";
-import tsParsers from "prettier/parser-typescript";
+import { features } from "./features";
+import { builtInParsers } from "./builtin-parsers";
 
-const parsers = {
-  ...babelParsers.parsers,
-  ...htmlParsers.parsers,
-  ...tsParsers.parsers,
-};
+const builtInParserArray = Object.values(builtInParsers);
+
+const options = features //
+  .map((feature) => feature.options.raw)
+  .reduce((acc, curr) => ({ ...acc, ...curr }), {});
+
+const parsers = features //
+  .map((feature) => feature.parsers)
+  .reduce((pre, cur) => ({ ...pre, ...cur(pre) }), builtInParsers);
+
+const filteredParsers = Object.fromEntries(
+  Object.entries(parsers).filter(([_, value]) => !builtInParserArray.includes(value)),
+);
 
 const plugin: Plugin = {
-  options: supportOptions,
-  parsers: {
-    // jsx
-    babel: withEstreeModifier(parsers.babel),
-    // tsx
-    typescript: withEstreeModifier(parsers.typescript),
-    // html
-    html: withHtmlModifier(parsers.html),
-    // vue
-    vue: withHtmlModifier(parsers.vue),
-    // angular
-    angular: withHtmlModifier(parsers.angular),
-  },
+  options: options,
+  parsers: filteredParsers,
 };
 
 export default plugin;
+
+type PluginConfig = (typeof features)[number]["options"]["infer"];
 
 export type { PluginConfig };

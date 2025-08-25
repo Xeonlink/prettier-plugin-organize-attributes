@@ -1,6 +1,7 @@
-import { defineAstModifier } from "../../ast-modifier";
-import { PRESET } from "../../preset";
-import type { AttributeNode, Node } from "./type";
+import { defineAstModifier } from "../../utils/ast-modifier";
+import { PRESET } from "./preset";
+import type { AttributeNode, Node } from "../../ast/html";
+import { options } from "./options";
 
 function getAttributeKey(attribute: AttributeNode) {
   return attribute.name;
@@ -29,7 +30,7 @@ function* sliceByGroup(attributeGroups: string[], attributes: AttributeNode[]) {
   yield result;
 }
 
-export const withHtmlModifier = defineAstModifier((node: Node, options) => {
+export const withHtmlModifier = defineAstModifier<Node, typeof options.infer>((node, options) => {
   const { attributeGroups, attributeIgnoreCase, attributeSort } = options;
 
   if (node.type === "element") {

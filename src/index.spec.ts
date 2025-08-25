@@ -1,16 +1,11 @@
-import SortAttributesPlugin from "./index";
-import MergePlugin from "../merge";
-import { Path } from "./utils/path";
-import * as prettier from "prettier";
+import prettier from "prettier";
 import { expect, test } from "vitest";
-
-const config = await prettier.resolveConfig(process.cwd());
+import SortAttributesPlugin from "./index";
+import { Path } from "./utils/path";
 
 const testcasesPath = new Path(__dirname, "tests");
 
 for (const caseDirPath of testcasesPath.dirs) {
-  if (caseDirPath.name !== "base-vue") continue;
-
   test(`${caseDirPath.name}`, async () => {
     const files = caseDirPath.files;
     const inputFilePath = files.find((file) => file.name.startsWith("input"))!;
@@ -31,8 +26,8 @@ for (const caseDirPath of testcasesPath.dirs) {
 
     const converted = await prettier.format(input, {
       ...config,
-      filepath: inputFilePath.name,
-      plugins: [...(config.plugins ?? []), SortAttributesPlugin, MergePlugin],
+      filepath: inputFilePath.full,
+      plugins: [...(config.plugins ?? []), SortAttributesPlugin, "prettier-plugin-merge"],
     });
 
     expect(converted).toEqual(expected);

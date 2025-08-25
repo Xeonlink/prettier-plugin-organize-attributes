@@ -9,7 +9,7 @@ const config = {
     // "./dist/src/index.mjs",
     // "prettier-plugin-vue",
     // "prettier-plugin-merge",
-    "./dist/merge.mjs",
+    // "./dist/merge.mjs",
   ],
 
   vueIndentScriptAndStyle: false,

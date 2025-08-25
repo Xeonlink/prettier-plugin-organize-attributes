@@ -1,6 +1,7 @@
-import { defineAstModifier } from "../../ast-modifier";
-import { PRESET } from "../../preset";
-import type { JSXAttribute, JSXSpreadAttribute, Node } from "./type";
+import { defineAstModifier } from "../../utils/ast-modifier";
+import { PRESET } from "./preset";
+import type { JSXAttribute, JSXSpreadAttribute, Node } from "../../ast/estree";
+import { options } from "./options";
 
 function getAttributeKey(attribute: JSXAttribute) {
   if (attribute.name.type === "JSXIdentifier") {
@@ -49,7 +50,7 @@ function* sliceBySpread(attributes: (JSXAttribute | JSXSpreadAttribute)[]) {
   }
 }
 
-export const withEstreeModifier = defineAstModifier((node: Node, options) => {
+export const withEstreeModifier = defineAstModifier<Node, typeof options.infer>((node, options) => {
   const { attributeGroups, attributeIgnoreCase, attributeSort } = options;
 
   if (node.type === "JSXOpeningElement") {

@@ -1,5 +1,3 @@
-import type { PluginOptions } from "./options";
-import { parseOptions } from "./options";
 import type { Parser } from "prettier";
 
 function travelAst<N extends object>(node: N, filter: (value: unknown) => value is N, callback: (node: N) => void) {
@@ -29,16 +27,17 @@ function isNode<T>(unknown: unknown): unknown is T {
   return true;
 }
 
-export function defineAstModifier<N extends { type: string | number }>(
-  modifier: (node: N, options: PluginOptions) => void,
-) {
+export function defineAstModifier<
+  N extends { type: string | number },
+  O extends Record<string, string | number | string[] | number[] | boolean>,
+>(modifier: (node: N, options: O) => void) {
   return (parser: Parser): Parser => {
     return {
       ...parser,
       parse: (text, options) => {
-        const parsedOptions = parseOptions(options);
         const ast = parser.parse(text, options);
-        travelAst<N>(ast, isNode, (node) => modifier(node, parsedOptions));
+        // @ts-expect-error
+        travelAst<N>(ast, isNode, (node) => modifier(node, options));
         return ast;
       },
     };
