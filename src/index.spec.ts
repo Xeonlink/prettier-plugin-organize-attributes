@@ -1,35 +1,50 @@
 import prettier from "prettier";
-import { expect, test } from "vitest";
-import SortAttributesPlugin from "./index";
+import { describe, expect, test } from "vitest";
+import MyPlugin from "./index";
 import { Path } from "./utils/path";
 
-const testcasesPath = new Path(__dirname, "tests");
+const featuresPath = new Path(__dirname, "features");
 
-for (const caseDirPath of testcasesPath.dirs) {
-  test(`${caseDirPath.name}`, async () => {
-    const files = caseDirPath.files;
-    const inputFilePath = files.find((file) => file.name.startsWith("input"))!;
-    const expectedFilePath = files.find((file) => file.name.startsWith("expected"))!;
-    const configFilePath = files.find((file) => file.name === "config.json")!;
+for (const featureDirPath of featuresPath.dirs) {
+  const testsDirPath = featureDirPath.dirs.find((dir) => dir.name === "tests");
+  if (!testsDirPath) {
+    console.warn(`tests directory not found in ${featureDirPath.name}`);
+    continue;
+  }
+  const caseDirPaths = testsDirPath.dirs;
+  if (caseDirPaths.length === 0) {
+    console.warn(`no test cases found in ${featureDirPath.name}`);
+    continue;
+  }
 
-    expect(inputFilePath).toBeDefined();
-    expect(expectedFilePath).toBeDefined();
-    expect(configFilePath).toBeDefined();
+  describe(featureDirPath.name, () => {
+    for (const caseDirPath of caseDirPaths) {
+      test(`${caseDirPath.name}`, async () => {
+        const files = caseDirPath.files;
+        const inputFilePath = files.find((file) => file.name.startsWith("input"))!;
+        const expectedFilePath = files.find((file) => file.name.startsWith("expected"))!;
+        const configFilePath = files.find((file) => file.name === ".prettierrc")!;
 
-    expect(inputFilePath.exists).toBe(true);
-    expect(expectedFilePath.exists).toBe(true);
-    expect(configFilePath.exists).toBe(true);
+        expect(inputFilePath).toBeDefined();
+        expect(expectedFilePath).toBeDefined();
+        expect(configFilePath).toBeDefined();
 
-    const input = inputFilePath.readSync("utf-8").toString();
-    const expected = expectedFilePath.readSync("utf-8").toString();
-    const config = JSON.parse(configFilePath.readSync("utf-8").toString()) as prettier.Options;
+        expect(inputFilePath.exists).toBe(true);
+        expect(expectedFilePath.exists).toBe(true);
+        expect(configFilePath.exists).toBe(true);
 
-    const converted = await prettier.format(input, {
-      ...config,
-      filepath: inputFilePath.full,
-      plugins: [...(config.plugins ?? []), SortAttributesPlugin, "prettier-plugin-merge"],
-    });
+        const input = inputFilePath.readSync("utf-8").toString();
+        const expected = expectedFilePath.readSync("utf-8").toString();
+        const config = JSON.parse(configFilePath.readSync("utf-8").toString()) as prettier.Options;
 
-    expect(converted).toEqual(expected);
+        const converted = await prettier.format(input, {
+          ...config,
+          filepath: inputFilePath.full,
+          plugins: [...(config.plugins ?? []), MyPlugin, "prettier-plugin-merge"],
+        });
+
+        expect(converted).toEqual(expected);
+      });
+    }
   });
 }

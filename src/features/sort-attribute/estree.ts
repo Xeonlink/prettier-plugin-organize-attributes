@@ -51,7 +51,8 @@ function* sliceBySpread(attributes: (JSXAttribute | JSXSpreadAttribute)[]) {
 }
 
 export const withEstreeModifier = defineAstModifier<Node, typeof options.infer>((node, options) => {
-  const { attributeGroups, attributeIgnoreCase, attributeSort } = options;
+  const { sortAttribute, sortAttributeGroup, sortAttributeOrder, sortAttributeIgnoreCase } = options;
+  if (!["on", "estree"].includes(sortAttribute)) return;
 
   if (node.type === "JSXOpeningElement") {
     const attributes = node.attributes;
@@ -59,17 +60,17 @@ export const withEstreeModifier = defineAstModifier<Node, typeof options.infer>(
 
     for (const slice1 of sliceBySpread(attributes)) {
       if (Array.isArray(slice1)) {
-        for (const slice2 of sliceByGroup(attributeGroups, slice1)) {
+        for (const slice2 of sliceByGroup(sortAttributeGroup, slice1)) {
           slice2.sort((a, b) => {
             let aKey = getAttributeKey(a);
             let bKey = getAttributeKey(b);
 
             const compare = aKey.localeCompare(bKey, undefined, {
-              sensitivity: attributeIgnoreCase ? "base" : "case",
+              sensitivity: sortAttributeIgnoreCase ? "base" : "case",
               numeric: true,
             });
 
-            switch (attributeSort) {
+            switch (sortAttributeOrder) {
               case "ASC":
                 return compare;
               case "DESC":

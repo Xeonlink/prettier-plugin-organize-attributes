@@ -31,23 +31,24 @@ function* sliceByGroup(attributeGroups: string[], attributes: AttributeNode[]) {
 }
 
 export const withHtmlModifier = defineAstModifier<Node, typeof options.infer>((node, options) => {
-  const { attributeGroups, attributeIgnoreCase, attributeSort } = options;
+  const { sortAttribute, sortAttributeGroup, sortAttributeOrder, sortAttributeIgnoreCase } = options;
+  if (!["on", "html"].includes(sortAttribute)) return;
 
   if (node.type === "element") {
     const attributes = node.attrs;
     const result = [];
 
-    for (const slice1 of sliceByGroup(attributeGroups, attributes)) {
+    for (const slice1 of sliceByGroup(sortAttributeGroup, attributes)) {
       slice1.sort((a, b) => {
         let aKey = getAttributeKey(a);
         let bKey = getAttributeKey(b);
 
         const compare = aKey.localeCompare(bKey, undefined, {
-          sensitivity: attributeIgnoreCase ? "base" : "case",
+          sensitivity: sortAttributeIgnoreCase ? "base" : "case",
           numeric: true,
         });
 
-        switch (attributeSort) {
+        switch (sortAttributeOrder) {
           case "ASC":
             return compare;
           case "DESC":

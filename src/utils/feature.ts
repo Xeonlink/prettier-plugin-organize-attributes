@@ -6,7 +6,9 @@ export type FeatureDefinition<
   K extends string = string,
 > = {
   options: OptionsDefinition<O>;
-  parsers: (parsers: Record<BuiltInParserName | (string & {}), Parser>) => Record<string, Parser>;
+  parsers: (
+    parsers: Record<BuiltInParserName | (string & {}), Parser>,
+  ) => Partial<Record<BuiltInParserName | (string & {}), Parser>>;
 };
 
 export function defineFeature<O extends Record<K, SupportOption>, K extends string>(

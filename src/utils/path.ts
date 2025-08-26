@@ -159,10 +159,22 @@ export class Path {
 
   /**
    * 현재 경로와 다른 경로의 상대 경로를 반환
+   * @param path 다른 경로
+   * @returns 상대 경로
    */
   public relativeTo(path: Path | string) {
     const stringPath = typeof path === "string" ? path : path.full;
     return new Path(pathUtil.relative(this.full, stringPath));
+  }
+
+  /**
+   * 현재 경로와 다른 경로의 상대 경로를 반환
+   * @param path 다른 경로
+   * @returns 상대 경로
+   */
+  public relativeFrom(path: Path | string) {
+    const stringPath = typeof path === "string" ? path : path.full;
+    return new Path(pathUtil.relative(stringPath, this.full));
   }
 
   /**

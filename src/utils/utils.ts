@@ -7,3 +7,13 @@ export function pick<T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
     {} as Pick<T, K>,
   );
 }
+
+export function omit<T, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
+  return keys.reduce(
+    (acc, key) => {
+      delete acc[key];
+      return acc;
+    },
+    { ...obj },
+  ) as Omit<T, K>;
+}

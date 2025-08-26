@@ -1,15 +1,6 @@
-import type { PluginConfig as SortAttributesPluginConfig } from "./dist/src/index.d.ts";
-import type { PluginConfig as SimpleImportPluginConfig } from "@trivago/prettier-plugin-sort-imports";
+import type { PluginConfig } from "./src/index";
 
 declare module "prettier" {
-  // interface Config
-  //   extends SimpleImportPluginConfig,
-  //     SortAttributesPluginConfig {
-  //   vueExcludeBlocks: string[];
-  // }
-  // interface RequiredOptions
-  //   extends SimpleImportPluginConfig,
-  //     SortAttributesPluginConfig {
-  //   vueExcludeBlocks: string[];
-  // }
+  interface Config extends PluginConfig {}
+  interface RequiredOptions extends PluginConfig {}
 }

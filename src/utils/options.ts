@@ -31,7 +31,7 @@ export type OptionsDefinition<O extends Record<string, SupportOption>> = {
   parse: (options: any) => InferSupportOptions<O>;
 };
 
-export function defineOptions<O extends Record<K, SupportOption>, K extends string>(
+export function defineOptions<const O extends Record<K, SupportOption>, K extends string>(
   definition: O,
 ): OptionsDefinition<O> {
   const parse = (options: any) => {

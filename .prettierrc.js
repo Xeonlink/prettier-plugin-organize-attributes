@@ -3,6 +3,7 @@ const config = {
   singleQuote: false,
   semi: true,
   printWidth: 120,
+  tabWidth: 2,
   trailingComma: "all",
   plugins: [
     // "@trivago/prettier-plugin-sort-imports",
@@ -11,8 +12,6 @@ const config = {
     // "prettier-plugin-merge",
     // "./dist/merge.mjs",
   ],
-
-  vueIndentScriptAndStyle: false,
 };
 
 export default config;

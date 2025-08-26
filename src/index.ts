@@ -1,6 +1,7 @@
 import type { Plugin } from "prettier";
 import { features } from "./features";
 import { builtInParsers } from "./builtin-parsers";
+import type { Prettify, UnionToIntersection } from "./utils/type";
 
 const builtInParserArray = Object.values(builtInParsers);
 
@@ -23,6 +24,6 @@ const plugin: Plugin = {
 
 export default plugin;
 
-type PluginConfig = (typeof features)[number]["options"]["infer"];
+type PluginConfig = Prettify<UnionToIntersection<(typeof features)[number]["options"]["infer"]>>;
 
 export type { PluginConfig };
