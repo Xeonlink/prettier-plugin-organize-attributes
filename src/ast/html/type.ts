@@ -18,7 +18,7 @@ export interface SourceSpan {
 }
 
 export interface BaseNode {
-  sourceSpan: SourceSpan;
+  sourceSpan?: SourceSpan;
 }
 
 export interface RootNode extends BaseNode {
@@ -32,12 +32,12 @@ export interface ElementNode extends BaseNode {
   name: string; // tag name like "div"
   attrs: AttributeNode[];
   children: ElementNode[];
-  startSourceSpan: SourceSpan;
-  endSourceSpan: SourceSpan;
-  nameSpan: SourceSpan;
-  namespace: null;
-  hasExplicitNameSpace: boolean;
-  tagDefinition: {
+  startSourceSpan?: SourceSpan;
+  endSourceSpan?: SourceSpan;
+  nameSpan?: SourceSpan;
+  namespace?: null;
+  hasExplicitNameSpace?: boolean;
+  tagDefinition?: {
     closedByChildren: {};
     closedByParent: boolean;
     isVoid: boolean;
@@ -53,11 +53,11 @@ export interface AttributeNode extends BaseNode {
   type: "attribute";
   name: string;
   value: string;
-  keySpan: SourceSpan;
-  valueSpan: SourceSpan;
-  valueTokens: T16Node[];
-  namespace: null;
-  hasExplicitNamespace: boolean;
+  keySpan?: SourceSpan;
+  valueSpan?: SourceSpan;
+  valueTokens?: T16Node[];
+  namespace?: null;
+  hasExplicitNamespace?: boolean;
 }
 
 export interface T16Node extends BaseNode {

@@ -2,10 +2,7 @@ import { defineAstModifier } from "@/ast";
 import { PRESET } from "./preset";
 import type { AttributeNode, Node } from "@/ast/html";
 import { options } from "./options";
-
-function getAttributeKey(attribute: AttributeNode) {
-  return attribute.name;
-}
+import { regex } from "@/utils/utils";
 
 function* sliceByGroup(attributeGroups: string[], attributes: AttributeNode[]) {
   let result = [...attributes];
@@ -13,16 +10,10 @@ function* sliceByGroup(attributeGroups: string[], attributes: AttributeNode[]) {
   const attributeRegExGroups = attributeGroups
     .map((group) => PRESET[group] ?? group)
     .flat()
-    .map((group) => {
-      const matched = group.match(/^\/(.*)\/([ig]*)$/);
-      if (matched) {
-        return new RegExp(matched[1], matched[2]);
-      }
-      return new RegExp(group);
-    });
+    .map(regex);
 
   for (const regex of attributeRegExGroups) {
-    const matched = result.filter((attribute) => regex.test(getAttributeKey(attribute)));
+    const matched = result.filter((attribute) => regex.test(attribute.name));
     yield matched;
     result = result.filter((attribute) => !matched.includes(attribute));
   }
@@ -40,8 +31,8 @@ export const withHtmlModifier = defineAstModifier<Node, typeof options.infer>((n
 
     for (const slice1 of sliceByGroup(sortAttributeGroup, attributes)) {
       slice1.sort((a, b) => {
-        let aKey = getAttributeKey(a);
-        let bKey = getAttributeKey(b);
+        const aKey = a.name;
+        const bKey = b.name;
 
         const compare = aKey.localeCompare(bKey, undefined, {
           sensitivity: sortAttributeIgnoreCase ? "base" : "case",

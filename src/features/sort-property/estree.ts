@@ -2,6 +2,7 @@ import { defineAstModifier } from "@/ast";
 import type { Node, Property, SpreadElement } from "@/ast/estree";
 import { options } from "./options";
 import { PRESET } from "./preset";
+import { regex } from "@/utils/utils";
 
 function getPropertyKey(property: Property) {
   switch (property.key.type) {
@@ -25,13 +26,7 @@ function* sliceByGroup(propertyGroups: string[], properties: Property[]) {
   const propertyRegExGroups = [...propertyGroups, "$EXPRESSION", "$NULL", "$UNDEFINED"]
     .map((group) => PRESET[group] ?? group)
     .flat()
-    .map((group) => {
-      const matched = group.match(/^\/(.*)\/([ig]*)$/);
-      if (matched) {
-        return new RegExp(matched[1], matched[2]);
-      }
-      return new RegExp(group);
-    });
+    .map(regex);
 
   for (const regex of propertyRegExGroups) {
     const matched = result.filter((property) => regex.test(getPropertyKey(property)));

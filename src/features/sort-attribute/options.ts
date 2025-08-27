@@ -18,7 +18,7 @@ export const options = defineOptions({
     category: "Global",
     array: true,
     default: [{ value: [] }],
-    description: "Provide an order to sort attributes.",
+    description: "Provide an order groups to sort attributes.",
   },
   sortAttributeOrder: {
     type: "choice",

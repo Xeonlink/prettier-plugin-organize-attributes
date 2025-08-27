@@ -1,4 +1,4 @@
-import { estree, type Node } from "@/ast/estree";
+import { type Node, estree } from "@/ast/estree";
 import { defineAstModifier } from "@/ast";
 import { options } from "./options";
 

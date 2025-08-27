@@ -6,7 +6,6 @@ export default defineFeature({
   options: options,
   parsers: (parsers) => ({
     babel: withEstreeModifier(parsers.babel),
-    "babel-ts": withEstreeModifier(parsers["babel-ts"]),
     typescript: withEstreeModifier(parsers.typescript),
   }),
 });

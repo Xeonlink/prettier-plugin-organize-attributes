@@ -1,4 +1,4 @@
-import type { SupportOption, SupportOptions } from "prettier";
+import type { CoreCategoryType, SupportOption, SupportOptions } from "prettier";
 import type { Prettify } from "./type";
 import { pick } from "@/utils/utils";
 

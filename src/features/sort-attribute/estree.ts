@@ -1,17 +1,9 @@
 import { defineAstModifier } from "@/ast";
 import { PRESET } from "./preset";
 import type { JSXAttribute, JSXSpreadAttribute, Node } from "@/ast/estree";
+import { getJSXAttributeKey } from "@/ast/estree";
 import { options } from "./options";
-
-function getAttributeKey(attribute: JSXAttribute) {
-  if (attribute.name.type === "JSXIdentifier") {
-    return attribute.name.name;
-  }
-  if (attribute.name.type === "JSXNamespacedName") {
-    return attribute.name.name.name;
-  }
-  return "";
-}
+import { regex } from "@/utils/utils";
 
 function* sliceByGroup(attributeGroups: string[], attributes: JSXAttribute[]) {
   let result = [...attributes];
@@ -19,16 +11,10 @@ function* sliceByGroup(attributeGroups: string[], attributes: JSXAttribute[]) {
   const attributeRegExGroups = attributeGroups
     .map((group) => PRESET[group] ?? group)
     .flat()
-    .map((group) => {
-      const matched = group.match(/^\/(.*)\/([ig]*)$/);
-      if (matched) {
-        return new RegExp(matched[1], matched[2]);
-      }
-      return new RegExp(group);
-    });
+    .map(regex);
 
   for (const regex of attributeRegExGroups) {
-    const matched = result.filter((attribute) => regex.test(getAttributeKey(attribute)));
+    const matched = result.filter((attribute) => regex.test(getJSXAttributeKey(attribute)));
     yield matched;
     result = result.filter((attribute) => !matched.includes(attribute));
   }
@@ -62,8 +48,8 @@ export const withEstreeModifier = defineAstModifier<Node, typeof options.infer>(
       if (Array.isArray(slice1)) {
         for (const slice2 of sliceByGroup(sortAttributeGroup, slice1)) {
           slice2.sort((a, b) => {
-            let aKey = getAttributeKey(a);
-            let bKey = getAttributeKey(b);
+            let aKey = getJSXAttributeKey(a);
+            let bKey = getJSXAttributeKey(b);
 
             const compare = aKey.localeCompare(bKey, undefined, {
               sensitivity: sortAttributeIgnoreCase ? "base" : "case",
