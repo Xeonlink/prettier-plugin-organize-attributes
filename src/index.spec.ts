@@ -1,7 +1,7 @@
 import prettier from "prettier";
 import { describe, expect, test } from "vitest";
 import MyPlugin from "./index";
-import { Path } from "./utils/path";
+import { Path } from "@/utils/path";
 
 const featuresPath = new Path(__dirname, "features");
 

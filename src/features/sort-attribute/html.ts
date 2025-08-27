@@ -1,6 +1,6 @@
-import { defineAstModifier } from "../../utils/ast-modifier";
+import { defineAstModifier } from "@/ast";
 import { PRESET } from "./preset";
-import type { AttributeNode, Node } from "../../ast/html";
+import type { AttributeNode, Node } from "@/ast/html";
 import { options } from "./options";
 
 function getAttributeKey(attribute: AttributeNode) {

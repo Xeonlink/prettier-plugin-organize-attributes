@@ -1,5 +1,5 @@
-import { defineAstModifier } from "../../utils/ast-modifier";
-import type { Node, Property, SpreadElement } from "../../ast/estree";
+import { defineAstModifier } from "@/ast";
+import type { Node, Property, SpreadElement } from "@/ast/estree";
 import { options } from "./options";
 import { PRESET } from "./preset";
 

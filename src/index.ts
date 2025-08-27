@@ -1,7 +1,7 @@
 import type { Plugin } from "prettier";
 import { features } from "./features";
 import { builtInParsers } from "./builtin-parsers";
-import type { Prettify, UnionToIntersection } from "./utils/type";
+import type { Prettify, UnionToIntersection } from "@/utils/type";
 
 const builtInParserArray = Object.values(builtInParsers);
 

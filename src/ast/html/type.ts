@@ -29,7 +29,6 @@ export interface RootNode extends BaseNode {
 
 export interface ElementNode extends BaseNode {
   type: "element";
-  sourceSpan: SourceSpan;
   name: string; // tag name like "div"
   attrs: AttributeNode[];
   children: ElementNode[];

@@ -1,4 +1,4 @@
-import { defineFeature } from "../../utils/feature";
+import { defineFeature } from "@/utils/feature";
 import { withEstreeModifier } from "./estree";
 import { options } from "./options";
 
@@ -6,5 +6,7 @@ export default defineFeature({
   options: options,
   parsers: (parsers) => ({
     babel: withEstreeModifier(parsers.babel),
+    "babel-ts": withEstreeModifier(parsers["babel-ts"]),
+    typescript: withEstreeModifier(parsers.typescript),
   }),
 });

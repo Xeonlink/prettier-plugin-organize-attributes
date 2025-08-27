@@ -1,6 +1,6 @@
 import type { SupportOption, SupportOptions } from "prettier";
 import type { Prettify } from "./type";
-import { pick } from "./utils";
+import { pick } from "@/utils/utils";
 
 type InferSupportOptionType<T extends SupportOption> = T extends { type: "string" }
   ? string

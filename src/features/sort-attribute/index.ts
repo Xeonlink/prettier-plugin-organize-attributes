@@ -1,4 +1,4 @@
-import { defineFeature } from "../../utils/feature";
+import { defineFeature } from "@/utils/feature";
 import { withEstreeModifier } from "./estree";
 import { withHtmlModifier } from "./html";
 import { options } from "./options";

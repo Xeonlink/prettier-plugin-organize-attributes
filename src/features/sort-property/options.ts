@@ -1,4 +1,4 @@
-import { defineOptions } from "../../utils/options";
+import { defineOptions } from "@/utils/options";
 
 export const options = defineOptions({
   sortProperty: {

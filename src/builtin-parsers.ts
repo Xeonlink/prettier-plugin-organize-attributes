@@ -1,4 +1,4 @@
-import type { Parser } from "prettier";
+import type { BuiltInParserName, Parser } from "prettier";
 import angularParsers from "prettier/parser-angular";
 import babelParsers from "prettier/parser-babel";
 import estreeParsers from "prettier/parser-espree";
@@ -25,4 +25,4 @@ export const builtInParsers = {
   ...postcssParsers.parsers,
   ...tsParsers.parsers,
   ...yamlParsers.parsers,
-} satisfies Record<string, Parser>;
+} satisfies Record<BuiltInParserName, Parser>;

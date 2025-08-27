@@ -1,4 +1,5 @@
 import { defineConfig } from "tsup";
+import path from "path";
 
 export default defineConfig({
   target: "es6", // 트랜스파일 대상
@@ -13,7 +14,12 @@ export default defineConfig({
 
   dts: true, // 타입 선언 파일(.d.ts) 생성
   minify: true, // JS 파일을 압축(minify) 해서 더 작게 만듭니다.
-  sourcemap: true, // 소스맵 생성
+  sourcemap: false, // 소스맵 생성
   clean: true, // 빌드 전 dist 폴더 정리
   treeshake: true, //사용하지 않는 코드를 제거합니다. 기본은 true지만 명시
+
+  esbuildOptions: (options) => {
+    if (!options.alias) options.alias = {};
+    options.alias["@"] = path.resolve(__dirname, "src");
+  },
 });

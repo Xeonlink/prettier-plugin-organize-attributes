@@ -1,6 +1,6 @@
-import { defineAstModifier } from "../../utils/ast-modifier";
+import { defineAstModifier } from "@/ast";
 import { PRESET } from "./preset";
-import type { JSXAttribute, JSXSpreadAttribute, Node } from "../../ast/estree";
+import type { JSXAttribute, JSXSpreadAttribute, Node } from "@/ast/estree";
 import { options } from "./options";
 
 function getAttributeKey(attribute: JSXAttribute) {
