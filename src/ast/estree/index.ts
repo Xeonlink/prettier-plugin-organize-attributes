@@ -1,7 +1,7 @@
 import type { Prettify } from "@/utils/type";
-import type { JSXAttribute, JSXOpeningElement, Node } from "estree-jsx";
+import type { JSXAttribute, JSXOpeningElement, Node } from "./type";
 
-export type * from "estree-jsx";
+export type * from "./type";
 
 function node<T extends string>(type: T & Node["type"], meta: Prettify<Omit<Node & { type: T }, "type">>) {
   // @ts-ignore

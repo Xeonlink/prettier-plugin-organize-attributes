@@ -1,6 +1,16 @@
-import { type Node, estree } from "@/ast/estree";
 import { defineAstModifier } from "@/ast";
+import type { ArrowFunctionExpression, CallExpression, JSXElement, Node } from "@/ast/estree";
+import { estree } from "@/ast/estree";
 import { options } from "./options";
+
+type TargetNode = CallExpression & {
+  arguments: [
+    ArrowFunctionExpression & {
+      body: JSXElement;
+    },
+  ];
+  optional: false;
+};
 
 /**
  * 노드가 대상 노드인지 확인합니다.
@@ -9,7 +19,7 @@ import { options } from "./options";
  * @example (expression).map((item) => <div key={item}>{item}</div>)
  * @returns 노드가 대상 노드이면 true, 그렇지 않으면 false
  */
-function isTargetNode(node: Node): boolean {
+function isTargetNode(node: Node): node is TargetNode {
   if (node.type !== "CallExpression") return false;
   if (node.callee.type !== "MemberExpression") return false;
 
@@ -57,7 +67,6 @@ export const withEstreeModifier = defineAstModifier<Node, typeof options.infer>(
   if (!["on"].includes(insertJsxKey)) return;
 
   if (isTargetNode(node)) {
-    // @ts-ignore
     node.arguments[0].body.openingElement.attributes.unshift(
       estree.node("JSXAttribute", {
         name: estree.jsxIdentifier("key"),

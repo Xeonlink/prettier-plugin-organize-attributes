@@ -33,6 +33,9 @@ importers:
       '@vitest/ui':
         specifier: ^3.2.4
         version: 3.2.4(vitest@3.2.4)
+      angular-html-parser:
+        specifier: ^9.2.0
+        version: 9.2.0
       prettier-plugin-merge:
         specifier: ^0.8.0
         version: 0.8.0(prettier@3.6.2)
@@ -553,6 +556,10 @@ packages:
     resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  angular-html-parser@9.2.0:
+    resolution: {integrity: sha512-jfnGrA5hguEcvHPrHUsrWOs8jk6SE9cQzFHxt3FPGwzvSEBXLAawReXylh492rzz5km5VgR664EUDMNnmYstSQ==}
+    engines: {node: '>= 14'}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -1549,6 +1556,8 @@ snapshots:
   '@vue/shared@3.5.19': {}
 
   acorn@8.15.0: {}
+
+  angular-html-parser@9.2.0: {}
 
   ansi-regex@5.0.1: {}
 

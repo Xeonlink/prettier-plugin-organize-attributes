@@ -1,0 +1,4 @@
+{
+  "insertAttribute": "on",
+  "insertAttributeMap": ["/^img$/i", "alt"]
+}
