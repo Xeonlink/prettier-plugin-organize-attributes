@@ -27,6 +27,8 @@ function isNode<T>(unknown: unknown): unknown is T {
   return true;
 }
 
+export type AstModifier = (parser: Parser) => Parser;
+
 export function defineAstModifier<
   N extends { type: string | number },
   O extends Record<string, string | number | string[] | number[] | boolean>,

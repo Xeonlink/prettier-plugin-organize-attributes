@@ -1,10 +1,10 @@
 import { defineAstModifier } from "@/ast";
 import { PRESET } from "./preset";
-import type { AttributeNode, Node } from "@/ast/html";
+import type { Attribute, Node } from "@/ast/html";
 import { options } from "./options";
 import { regex } from "@/utils/utils";
 
-function* sliceByGroup(attributeGroups: string[], attributes: AttributeNode[]) {
+function* sliceByGroup(attributeGroups: string[], attributes: Attribute[]) {
   let result = [...attributes];
 
   const attributeRegExGroups = attributeGroups

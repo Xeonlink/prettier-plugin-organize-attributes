@@ -1,9 +1,17 @@
-import type { Prettify } from "@/utils/type";
-import type { JSXAttribute, JSXOpeningElement, Node } from "./type";
+import type {
+  ArrowFunctionExpression,
+  Expression,
+  Identifier,
+  JSXAttribute,
+  JSXOpeningElement,
+  Node,
+  VariableDeclarator,
+} from "./type";
 
+export * from "./function";
 export type * from "./type";
 
-function node<T extends string>(type: T & Node["type"], meta: Prettify<Omit<Node & { type: T }, "type">>) {
+function node<T extends Node["type"]>(type: T, meta: Omit<Node & { type: T }, "type">) {
   // @ts-ignore
   meta.type = type;
   return meta as Node & { type: T };
@@ -32,11 +40,36 @@ function jsxNamespacedName(namespace: string, name: string) {
   });
 }
 
+function arrowFunctionDeclaration(
+  kind: "var" | "let" | "const" | "using" | "await using",
+  meta: Omit<ArrowFunctionExpression, "type"> & { id: Identifier },
+) {
+  const { id, ...rest } = meta;
+  return estree.node("VariableDeclaration", {
+    kind,
+    declarations: [
+      estree.node("VariableDeclarator", {
+        id,
+        init: estree.node("ArrowFunctionExpression", rest),
+      }),
+    ],
+  });
+}
+
+function declareVariables(kind: "var" | "let" | "const" | "using" | "await using", declarators: VariableDeclarator[]) {
+  return estree.node("VariableDeclaration", {
+    kind,
+    declarations: declarators,
+  });
+}
+
 export const estree = {
   node,
   stringLiteral,
   jsxIdentifier,
   jsxNamespacedName,
+  arrowFunctionDeclaration,
+  declareVariables,
 };
 
 export function getJSXAttributeKey(attribute: JSXAttribute): string {
@@ -57,4 +90,14 @@ export function getJSXOpeningElementTagName(jsxOpeningElement: JSXOpeningElement
     case "JSXMemberExpression":
       return jsxOpeningElement.name.property.name;
   }
+}
+
+export function expression2BlockStatement(expression: Expression) {
+  return estree.node("BlockStatement", {
+    body: [
+      estree.node("ReturnStatement", {
+        argument: expression,
+      }),
+    ],
+  });
 }
