@@ -1,9 +1,11 @@
 import type {
   ArrowFunctionExpression,
+  Comment,
   Identifier,
   JSXAttribute,
   JSXOpeningElement,
   Node,
+  StringLiteral,
   VariableDeclarator,
 } from "./type";
 
@@ -16,13 +18,14 @@ function node<T extends Node["type"]>(type: T, meta: Omit<Node & { type: T }, "t
   return meta as Node & { type: T };
 }
 
-function stringLiteral(value: string) {
+function stringLiteral(value: string, options: Omit<StringLiteral, "type" | "value" | "extra"> = {}) {
   return node("StringLiteral", {
     value: value,
     extra: {
       rawValue: value,
       raw: `"${value}"`,
     },
+    ...options,
   });
 }
 
@@ -62,6 +65,21 @@ function declareVariables(kind: "var" | "let" | "const" | "using" | "await using
   });
 }
 
+function comment(type: "Line" | "Block", value: string, options: Omit<Comment, "type" | "value"> = {}): Comment {
+  return {
+    type,
+    value,
+    ...options,
+  };
+}
+
+function identifier(name: string, options: Omit<Identifier, "type" | "name"> = {}) {
+  return node("Identifier", {
+    name,
+    ...options,
+  });
+}
+
 export const estree = {
   node,
   stringLiteral,
@@ -69,6 +87,8 @@ export const estree = {
   jsxNamespacedName,
   arrowFunctionDeclaration,
   declareVariables,
+  comment,
+  identifier,
 };
 
 export function getJSXAttributeKey(attribute: JSXAttribute): string {

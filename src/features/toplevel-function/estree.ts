@@ -35,12 +35,6 @@ export const withEstreeModifier: AstModifier = (parser) => ({
                 loc,
                 range,
               });
-              // item.declaration = estree.declareVariables("const", [
-              //   estree.node("VariableDeclarator", {
-              //     id: target.declaration.id,
-              //     init: convertFunction(target.declaration).toArrowFunctionExpression(),
-              //   }),
-              // ]);
             }
             break;
           case "FunctionDeclaration":
@@ -58,12 +52,6 @@ export const withEstreeModifier: AstModifier = (parser) => ({
               loc,
               range,
             });
-            // program.body[i] = estree.declareVariables("const", [
-            //   estree.node("VariableDeclarator", {
-            //     id: item.id,
-            //     init: convertFunction(item).toArrowFunctionExpression(),
-            //   }),
-            // ]);
             break;
           case "ExpressionStatement":
             if (item.expression.type === "FunctionExpression") {

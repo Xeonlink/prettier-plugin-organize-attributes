@@ -1,6 +1,10 @@
 import type { Parser } from "prettier";
 
-function travelAst<N extends object>(node: N, filter: (value: unknown) => value is N, callback: (node: N) => void) {
+export function travelAst<N extends object>(
+  node: N,
+  filter: (value: unknown) => value is N,
+  callback: (node: N) => void,
+) {
   callback(node);
 
   for (const value of Object.values(node)) {
@@ -19,7 +23,7 @@ function travelAst<N extends object>(node: N, filter: (value: unknown) => value 
   }
 }
 
-function isNode<T>(unknown: unknown): unknown is T {
+export function isNode<T>(unknown: unknown): unknown is T {
   if (typeof unknown !== "object") return false;
   if (unknown === null) return false;
   if (!("type" in unknown)) return false;

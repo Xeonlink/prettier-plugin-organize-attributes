@@ -15,4 +15,19 @@ export const PRESET: Record<string, (node: VariableDeclaration) => boolean> = {
       return true;
     });
   },
+  $SOME_HAS_DISPOSE: (node) => {
+    return node.declarations.some((declarator) => {
+      if (declarator.init?.type !== "ObjectExpression") return false;
+
+      return declarator.init.properties.some((property) => {
+        if (property.type !== "Property") return false;
+        if (property.key.type !== "MemberExpression") return false;
+        if (property.key.object.type !== "Identifier") return false;
+        if (property.key.object.name !== "Symbol") return false;
+        if (property.key.property.type !== "Identifier") return false;
+        if (property.key.property.name !== "dispose") return false;
+        return true;
+      });
+    });
+  },
 };

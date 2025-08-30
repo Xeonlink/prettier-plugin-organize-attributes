@@ -6,12 +6,14 @@ import styleAttribute from "./style-attribute";
 import toplevelFunction from "./toplevel-function";
 import declaratorCount from "./declarator-count";
 import declarationKind from "./declaration-kind";
+// import dependencyArray from "./*dependency-array";
 
 export const features = [
   // insert
   insertJsxKey,
   insertAttribute,
   declaratorCount,
+  // dependencyArray,
   // update
   sortAttribute,
   sortProperty,
