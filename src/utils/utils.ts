@@ -66,3 +66,9 @@ export function memoize<T extends (...args: any[]) => any>(fn: T): T {
     return result;
   }) as T;
 }
+
+export function* iter<T>(arr: T[]) {
+  for (let i = 0; i < arr.length; i++) {
+    yield [i, arr[i]] as const;
+  }
+}

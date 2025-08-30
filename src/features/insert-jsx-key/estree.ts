@@ -1,11 +1,45 @@
 import { defineAstModifier } from "@/ast";
-import type { ArrowFunctionExpression, CallExpression, JSXElement, Node } from "@/ast/estree";
+import type {
+  ArrowFunctionExpression,
+  Identifier,
+  JSXElement,
+  MemberExpression,
+  Node,
+  PrivateIdentifier,
+  SimpleCallExpression,
+  StringLiteral,
+  TemplateElement,
+  TemplateLiteral,
+} from "@/ast/estree";
 import { estree } from "@/ast/estree";
 import { options } from "./options";
 
-type TargetNode = CallExpression & {
+type MapAccessor =
+  | (Omit<PrivateIdentifier, "name"> & {
+      name: "map";
+    })
+  | (Omit<Identifier, "name"> & {
+      name: "map";
+    })
+  | (Omit<StringLiteral, "value"> & {
+      value: "map";
+    })
+  | (Omit<TemplateLiteral, "quasis"> & {
+      quasis: [
+        Omit<TemplateElement, "value"> & {
+          value: Omit<TemplateElement["value"], "raw"> & {
+            raw: "map";
+          };
+        },
+      ];
+    });
+
+type TargetNode = Omit<SimpleCallExpression, "callee" | "arguments" | "optional"> & {
+  callee: Omit<MemberExpression, "property"> & {
+    property: MapAccessor;
+  };
   arguments: [
-    ArrowFunctionExpression & {
+    Omit<ArrowFunctionExpression, "body"> & {
       body: JSXElement;
     },
   ];

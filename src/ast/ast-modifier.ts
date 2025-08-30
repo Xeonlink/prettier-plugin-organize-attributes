@@ -29,10 +29,17 @@ function isNode<T>(unknown: unknown): unknown is T {
 
 export type AstModifier = (parser: Parser) => Parser;
 
-export function defineAstModifier<
-  N extends { type: string | number },
-  O extends Record<string, string | number | string[] | number[] | boolean>,
->(modifier: (node: N, options: O) => void) {
+type NodeShape = { type: string | number };
+type OptionsShape = Record<string, string | number | string[] | number[] | boolean>;
+
+export interface AstTraveler<N extends NodeShape, O extends OptionsShape> {
+  canTravel: (options: O) => boolean;
+  travel: (node: N, options: O) => void;
+}
+
+type Modifier<N extends NodeShape, O extends OptionsShape> = (node: N, options: O) => void;
+
+export function defineAstModifier<N extends NodeShape, O extends OptionsShape>(modifier: Modifier<N, O>) {
   return (parser: Parser): Parser => {
     return {
       ...parser,

@@ -10,7 +10,7 @@ export function SimpleTest() {
 
         <img src={""} alt="" style={{ color: "red" }} />
 
-        <button style="color: red;" onClick={function () {}}>Hello</button>
+        <button style="color: red;" onClick={function /* comment */() {}}>Hello</button>
         <button style="color: red;" onClick={function test() {}}>Hello</button>
 
         <ul>

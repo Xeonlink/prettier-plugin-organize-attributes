@@ -1,12 +1,15 @@
+import { omit } from "@/utils/utils";
 import { estree } from ".";
-import type { Function, Identifier, MaybeNamedFunctionDeclaration } from "./type";
+import type {
+  ArrowFunctionExpression,
+  Function,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  MaybeNamedFunctionDeclaration,
+} from "./type";
 
 type BroadFunction = Function | MaybeNamedFunctionDeclaration;
-
-function _pickCommon(base: BroadFunction) {
-  const { body, params, async, generator, type, leadingComments, loc, range, trailingComments } = base;
-  return { body, params, async, generator, type, leadingComments, loc, range, trailingComments };
-}
 
 function _body2BlockStatement(body: BroadFunction["body"]) {
   if (body.type === "BlockStatement") {
@@ -22,23 +25,52 @@ function _body2BlockStatement(body: BroadFunction["body"]) {
   }
 }
 
+function _clearTypeAnnotation(identifier: Identifier): Identifier {
+  const { name, type, leadingComments, loc, range, trailingComments } = identifier;
+  return { name, type, leadingComments, loc, range, trailingComments };
+}
+
 export function convertFunction(base: BroadFunction) {
-  const common = _pickCommon(base);
+  const baseType = base.type;
+  const common = omit(base, "type");
   const body = _body2BlockStatement(base.body);
 
   const toArrowFunctionExpression = () => {
-    return estree.node("ArrowFunctionExpression", { ...common, expression: false, body });
+    if (baseType === "ArrowFunctionExpression") {
+      return base as ArrowFunctionExpression;
+    } else {
+      return estree.node("ArrowFunctionExpression", { ...common, expression: false, body });
+    }
   };
   const toFunctionExpression = () => {
-    return estree.node("FunctionExpression", { ...common, body });
+    if (baseType === "FunctionExpression") {
+      return base as FunctionExpression;
+    } else {
+      return estree.node("FunctionExpression", { ...common, body });
+    }
   };
-  const toFunctionDeclaration = (id: Identifier) => {
-    return estree.node("FunctionDeclaration", { ...common, id, body });
+  const toMaybeNamedFunctionDeclaration = (_id: Identifier | null = null) => {
+    if (baseType === "FunctionDeclaration") {
+      return base as MaybeNamedFunctionDeclaration;
+    } else {
+      const id = _id === null ? _id : _clearTypeAnnotation(_id);
+      // @ts-expect-error MaybeNamedFunction
+      return estree.node("FunctionDeclaration", { ...common, id, body });
+    }
+  };
+  const toFunctionDeclaration = (_id: Identifier) => {
+    if (baseType === "FunctionDeclaration") {
+      return base as FunctionDeclaration;
+    } else {
+      const id = _clearTypeAnnotation(_id);
+      return estree.node("FunctionDeclaration", { ...common, id, body });
+    }
   };
 
   return {
     toArrowFunctionExpression,
     toFunctionExpression,
     toFunctionDeclaration,
+    toMaybeNamedFunctionDeclaration,
   };
 }

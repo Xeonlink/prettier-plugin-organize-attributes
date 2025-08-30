@@ -1,6 +1,5 @@
 import type {
   ArrowFunctionExpression,
-  Expression,
   Identifier,
   JSXAttribute,
   JSXOpeningElement,
@@ -90,14 +89,4 @@ export function getJSXOpeningElementTagName(jsxOpeningElement: JSXOpeningElement
     case "JSXMemberExpression":
       return jsxOpeningElement.name.property.name;
   }
-}
-
-export function expression2BlockStatement(expression: Expression) {
-  return estree.node("BlockStatement", {
-    body: [
-      estree.node("ReturnStatement", {
-        argument: expression,
-      }),
-    ],
-  });
 }

@@ -2,6 +2,7 @@ import type {
   ArrowFunctionExpression,
   ExportDefaultDeclaration,
   ExportNamedDeclaration,
+  Function,
   FunctionDeclaration,
   FunctionExpression,
   Identifier,
@@ -12,47 +13,37 @@ import type {
 } from "@/ast/estree";
 import type { Prettify } from "@/utils/type";
 
-type Target0 = Prettify<
+type ExportDefaultFunctionShape = Prettify<
   Omit<ExportDefaultDeclaration, "declaration"> & {
-    declaration: ArrowFunctionExpression;
+    declaration: Function | MaybeNamedFunctionDeclaration;
   }
 >;
 
 /**
  * 주어진 노드가 형태에 맞는지 검사합니다.
  *
+ * @example export default function () {}
+ * @example export default function Named2() {}
  * @example export default () => {}
  * @param node 검사할 노드
  * @returns 형태에 맞으면 true, 아니면 false
  */
-export function isTarget0(node: Program["body"][number]): node is Target0 {
+export function isExportDefaultFunctionShape(node: Program["body"][number]): node is ExportDefaultFunctionShape {
   if (node.type !== "ExportDefaultDeclaration") return false;
-  if (node.declaration.type !== "ArrowFunctionExpression") return false;
-  return true;
-}
 
-type Target1 = Prettify<
-  Omit<ExportDefaultDeclaration, "declaration"> & {
-    declaration: MaybeNamedFunctionDeclaration | FunctionExpression;
+  switch (node.declaration.type) {
+    case "ArrowFunctionExpression":
+    case "FunctionExpression":
+    case "FunctionDeclaration":
+      break;
+    default:
+      return false;
   }
->;
-
-/**
- * 주어진 노드가 형태에 맞는지 검사합니다.
- *
- * @example export default function Named() {}
- * @example export default function () {}
- * @param node 검사할 노드
- * @returns 형태에 맞으면 true, 아니면 false
- */
-export function isTarget1(node: Program["body"][number]): node is Target1 {
-  if (node.type !== "ExportDefaultDeclaration") return false;
-  if (node.declaration.type !== "FunctionExpression" && node.declaration.type !== "FunctionDeclaration") return false;
 
   return true;
 }
 
-type Target2 = Omit<ExportNamedDeclaration, "declaration"> & {
+type ExportExpressionFnShape = Omit<ExportNamedDeclaration, "declaration"> & {
   declaration: FunctionDeclaration;
 };
 
@@ -63,13 +54,13 @@ type Target2 = Omit<ExportNamedDeclaration, "declaration"> & {
  * @param node 검사할 노드
  * @returns 형태에 맞으면 true, 아니면 false
  */
-export function isTarget2(node: Program["body"][number]): node is Target2 {
+export function isExportExpressionFnShape(node: Program["body"][number]): node is ExportExpressionFnShape {
   if (node.type !== "ExportNamedDeclaration") return false;
   if (node.declaration?.type !== "FunctionDeclaration") return false;
   return true;
 }
 
-type Target4 = Omit<ExportNamedDeclaration, "declaration"> & {
+type ExportVarFnShape = Omit<ExportNamedDeclaration, "declaration"> & {
   declaration: Omit<VariableDeclaration, "declarations"> & {
     declarations: [
       Omit<VariableDeclarator, "id" | "init"> & {
@@ -89,7 +80,7 @@ type Target4 = Omit<ExportNamedDeclaration, "declaration"> & {
  * @param node 검사할 노드
  * @returns 형태에 맞으면 true, 아니면 false
  */
-export function isTarget4(node: Program["body"][number]): node is Target4 {
+export function isExportVarFnShape(node: Program["body"][number]): node is ExportVarFnShape {
   if (node.type !== "ExportNamedDeclaration") return false;
   if (node.declaration?.type !== "VariableDeclaration") return false;
   if (node.declaration.declarations[0]?.id.type !== "Identifier") return false;
@@ -111,7 +102,7 @@ export function isFunctionDeclaration(node: Program["body"][number]): node is Fu
   return true;
 }
 
-type Target5 = Omit<VariableDeclaration, "declarations"> & {
+type VarFnShape = Omit<VariableDeclaration, "declarations"> & {
   declarations: [
     Omit<VariableDeclarator, "id" | "init"> & {
       id: Identifier;
@@ -129,11 +120,17 @@ type Target5 = Omit<VariableDeclaration, "declarations"> & {
  * @param node 검사할 노드
  * @returns 형태에 맞으면 true, 아니면 false
  */
-export function isTarget5(node: Program["body"][number]): node is Target5 {
+export function isVarFnShape(node: Program["body"][number]): node is VarFnShape {
   if (node.type !== "VariableDeclaration") return false;
   if (node.declarations[0]?.id.type !== "Identifier") return false;
-  const initExpression = node.declarations[0]?.init;
-  if (initExpression?.type !== "FunctionExpression" && initExpression?.type !== "ArrowFunctionExpression") return false;
+
+  switch (node.declarations[0]?.init?.type) {
+    case "FunctionExpression":
+    case "ArrowFunctionExpression":
+      break;
+    default:
+      return false;
+  }
 
   return true;
 }

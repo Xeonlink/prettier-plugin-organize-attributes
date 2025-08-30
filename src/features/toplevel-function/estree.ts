@@ -1,7 +1,8 @@
 import { type AstModifier } from "@/ast";
-import { convertFunction, estree, expression2BlockStatement, type Program } from "@/ast/estree";
+import { convertFunction, estree, type Program } from "@/ast/estree";
 import type { options } from "./options";
-import { isTarget0, isTarget1, isTarget2, isTarget4, isTarget5 } from "./target";
+import { isExportDefaultFunctionShape, isExportExpressionFnShape, isExportVarFnShape, isVarFnShape } from "./target";
+import { iter } from "@/utils/utils";
 
 export const withEstreeModifier: AstModifier = (parser) => ({
   ...parser,
@@ -10,94 +11,93 @@ export const withEstreeModifier: AstModifier = (parser) => ({
     const program = parser.parse(text, rawOptions) as Program;
 
     if (toplevelFunction === "force-arrow-function") {
-      for (let i = 0; i < program.body.length; i++) {
-        const item = program.body[i];
-        if (item.type === "ExportDefaultDeclaration") {
-          const target = item;
-          if (isTarget1(target)) {
-            // item.declaration = convertFunction(target.declaration).toArrowFunctionExpression();
-            item.declaration = estree.node("ArrowFunctionExpression", {
-              body: target.declaration.body,
-              expression: false,
-              params: target.declaration.params,
-              async: target.declaration.async,
-              generator: target.declaration.generator,
+      for (const [i, item] of iter(program.body)) {
+        switch (item.type) {
+          case "ExportDefaultDeclaration":
+            if (isExportDefaultFunctionShape(item)) {
+              item.declaration = convertFunction(item.declaration).toArrowFunctionExpression();
+            }
+            break;
+          case "ExportNamedDeclaration":
+            const target = item;
+            if (isExportExpressionFnShape(target)) {
+              const { range, loc } = target.declaration;
+              item.declaration = estree.node("VariableDeclaration", {
+                kind: "const",
+                declarations: [
+                  estree.node("VariableDeclarator", {
+                    id: target.declaration.id,
+                    init: convertFunction(target.declaration).toArrowFunctionExpression(),
+                    loc,
+                    range,
+                  }),
+                ],
+                loc,
+                range,
+              });
+              // item.declaration = estree.declareVariables("const", [
+              //   estree.node("VariableDeclarator", {
+              //     id: target.declaration.id,
+              //     init: convertFunction(target.declaration).toArrowFunctionExpression(),
+              //   }),
+              // ]);
+            }
+            break;
+          case "FunctionDeclaration":
+            const { range, loc } = program.body[i];
+            program.body[i] = estree.node("VariableDeclaration", {
+              kind: "const",
+              declarations: [
+                estree.node("VariableDeclarator", {
+                  id: item.id,
+                  init: convertFunction(item).toArrowFunctionExpression(),
+                  loc,
+                  range,
+                }),
+              ],
+              loc,
+              range,
             });
-          }
-        } else if (item.type === "ExportNamedDeclaration") {
-          const target = item;
-          if (isTarget2(target)) {
-            // item.declaration = estree.declareVariables("const", [
+            // program.body[i] = estree.declareVariables("const", [
             //   estree.node("VariableDeclarator", {
-            //     id: target.declaration.id,
-            //     init: convertFunction(target.declaration).toArrowFunctionExpression(),
+            //     id: item.id,
+            //     init: convertFunction(item).toArrowFunctionExpression(),
             //   }),
             // ]);
-            item.declaration = estree.arrowFunctionDeclaration("const", {
-              id: target.declaration.id,
-              body: target.declaration.body,
-              expression: false,
-              params: target.declaration.params,
-              async: target.declaration.async,
-              generator: target.declaration.generator,
-            });
-          }
-        } else if (item.type === "FunctionDeclaration") {
-          program.body[i] = estree.arrowFunctionDeclaration("const", {
-            id: item.id,
-            body: item.body,
-            expression: false,
-            params: item.params,
-            async: item.async,
-            generator: item.generator,
-          });
+            break;
+          case "ExpressionStatement":
+            if (item.expression.type === "FunctionExpression") {
+              item.expression = convertFunction(item.expression).toArrowFunctionExpression();
+            }
+            break;
         }
       }
-    } else if (toplevelFunction === "force-function-declaration") {
-      for (let i = 0; i < program.body.length; i++) {
-        const item = program.body[i];
-        if (item.type === "ExportDefaultDeclaration") {
-          const target = item;
-          if (isTarget0(target)) {
-            item.declaration = estree.node("FunctionExpression", {
-              id: null,
-              body:
-                target.declaration.body.type === "BlockStatement"
-                  ? target.declaration.body
-                  : expression2BlockStatement(target.declaration),
-              params: target.declaration.params,
-              async: target.declaration.async,
-              generator: target.declaration.generator,
-            });
-          }
-        } else if (item.type === "ExportNamedDeclaration") {
-          const target = item;
-          if (isTarget4(item)) {
-            target.declaration = estree.node("FunctionDeclaration", {
-              id: item.declaration.declarations[0].id,
-              body:
-                item.declaration.declarations[0].init.body.type === "BlockStatement"
-                  ? item.declaration.declarations[0].init.body
-                  : expression2BlockStatement(item.declaration.declarations[0].init),
-              params: item.declaration.declarations[0].init.params,
-              async: item.declaration.declarations[0].init.async,
-              generator: item.declaration.declarations[0].init.generator,
-            });
-          }
-        } else if (item.type === "VariableDeclaration") {
-          const target = item;
-          if (isTarget5(target)) {
-            program.body[i] = estree.node("FunctionDeclaration", {
-              id: target.declarations[0].id,
-              body:
-                target.declarations[0].init.body.type === "BlockStatement"
-                  ? target.declarations[0].init.body
-                  : expression2BlockStatement(target.declarations[0].init),
-              params: target.declarations[0].init.params,
-              async: target.declarations[0].init.async,
-              generator: target.declarations[0].init.generator,
-            });
-          }
+    } else if (toplevelFunction === "force-function-keyword") {
+      for (const [i, item] of iter(program.body)) {
+        switch (item.type) {
+          case "ExportDefaultDeclaration":
+            if (isExportDefaultFunctionShape(item)) {
+              item.declaration = convertFunction(item.declaration).toMaybeNamedFunctionDeclaration();
+            }
+            break;
+          case "ExportNamedDeclaration":
+            const target = item;
+            if (isExportVarFnShape(item)) {
+              const { id, init: fnBase } = item.declaration.declarations[0];
+              target.declaration = convertFunction(fnBase).toFunctionDeclaration(id);
+            }
+            break;
+          case "VariableDeclaration":
+            if (isVarFnShape(item)) {
+              const { id, init: fnBase } = item.declarations[0];
+              program.body[i] = convertFunction(fnBase).toFunctionDeclaration(id);
+            }
+            break;
+          case "ExpressionStatement":
+            if (item.expression.type === "ArrowFunctionExpression") {
+              item.expression = convertFunction(item.expression).toFunctionExpression();
+            }
+            break;
         }
       }
     }

@@ -1,3 +1,5 @@
+// comment3
+
 const a = {
     f: 6,
     c: 3,
@@ -5,6 +7,9 @@ const a = {
     a: 1,
     
     i: 9,
+
+    // comment2
+
     [{
         f: 6,
         c: 3,
@@ -18,3 +23,5 @@ const a = {
     // comment
     e: 5,
   };
+
+  // comment4

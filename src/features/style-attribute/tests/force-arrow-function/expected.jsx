@@ -9,7 +9,7 @@ export function SimpleTest() {
 
       <img src={""} alt="" style={{ color: "red" }} />
 
-      <button style="color: red;" onClick={() => {}}>
+      <button style="color: red;" onClick={() => /* comment */ {}}>
         Hello
       </button>
       <button style="color: red;" onClick={() => {}}>

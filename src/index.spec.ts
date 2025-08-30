@@ -6,12 +6,14 @@ import { Path } from "@/utils/path";
 const featuresPath = new Path(__dirname, "features");
 
 for (const featureDirPath of featuresPath.dirs) {
+  if (featureDirPath.name.startsWith("*")) continue;
+
   const testsDirPath = featureDirPath.dirs.find((dir) => dir.name === "tests");
   if (!testsDirPath) {
     console.warn(`tests directory not found in ${featureDirPath.name}`);
     continue;
   }
-  const caseDirPaths = testsDirPath.dirs;
+  const caseDirPaths = testsDirPath.dirs.filter((dir) => !dir.name.startsWith("*"));
   if (caseDirPaths.length === 0) {
     console.warn(`no test cases found in ${featureDirPath.name}`);
     continue;
