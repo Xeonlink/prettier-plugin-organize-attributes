@@ -34,6 +34,8 @@ export type Digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 
 export type UpperFirst<T extends string> = T extends `${infer First}${infer Rest}` ? `${Uppercase<First>}${Rest}` : T;
 
+export type LowerFirst<T extends string> = T extends `${infer First}${infer Rest}` ? `${Lowercase<First>}${Rest}` : T;
+
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};

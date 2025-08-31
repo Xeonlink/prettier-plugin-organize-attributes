@@ -2,7 +2,7 @@ import { defineAstModifier, travelAst } from "@/ast";
 import type { JSXAttribute, JSXOpeningElement, JSXSpreadAttribute, Node } from "@/ast/estree";
 import { getJSXAttributeKey } from "@/ast/estree";
 import type { Options } from "./options";
-import { clearGroupDefs, createEmptyGroupDefs, grouping, trySorting } from "./organize";
+import { miniOrganize } from "./organize";
 import { PRESET } from "./preset";
 
 function* sliceBySpread(attributes: JSXOpeningElement["attributes"]) {
@@ -28,21 +28,20 @@ export const withEstreeParser = defineAstModifier<Node, Options>((node, options)
     attributeGroups.push(PRESET.keys.$VUE);
   }
 
-  const groupDefs = createEmptyGroupDefs<JSXAttribute>({
-    attributeGroups,
-    attributeIgnoreCase,
-  });
-
   travelAst(node, (node) => {
     if (node.type === "JSXOpeningElement") {
       const result = [];
 
       for (const slice1 of sliceBySpread(node.attributes)) {
         if (Array.isArray(slice1)) {
-          grouping(groupDefs, slice1, getJSXAttributeKey);
-          trySorting(groupDefs, attributeSort, getJSXAttributeKey);
-          result.push(...groupDefs.flatMap((groupDef) => groupDef.values));
-          clearGroupDefs(groupDefs);
+          const organized = miniOrganize(slice1, {
+            groups: attributeGroups,
+            ignoreCase: attributeIgnoreCase,
+            sort: attributeSort,
+            getKey: getJSXAttributeKey,
+          });
+
+          result.push(...organized);
         } else {
           result.push(slice1);
         }

@@ -1,4 +1,5 @@
 import type { SupportOption, SupportOptions } from "prettier";
+import type { UpperAlphabet } from "./utils/type";
 
 type InferOptionType<T extends SupportOption> = {
   boolean: T extends { type: "boolean" } ? boolean : never;
@@ -12,7 +13,7 @@ type InferOption<T extends SupportOption> =
   | (T extends { default?: any } ? never : undefined)
   | (T extends { array: true } ? Array<InferOptionType<T>> : InferOptionType<T>);
 
-type InferOptions<T extends SupportOptions> =
+type InferOptions<T extends Record<`attribute${UpperAlphabet}${string}`, SupportOption>> =
   T extends Record<infer O, SupportOption> ? { [key in O]: InferOption<T[key]> } : never;
 
 const defineOptions = <const T extends SupportOptions>(options: T) => options;

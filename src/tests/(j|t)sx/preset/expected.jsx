@@ -1,1 +1,1 @@
-<div class="style" id="id" other="other"></div>;
+<div className="style" id="id" other="other"></div>;

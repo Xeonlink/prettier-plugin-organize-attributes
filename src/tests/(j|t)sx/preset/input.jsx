@@ -1,2 +1,2 @@
 <div  
-id="id" other="other" class="style" ></div>
+id="id" other="other" className="style" ></div>
