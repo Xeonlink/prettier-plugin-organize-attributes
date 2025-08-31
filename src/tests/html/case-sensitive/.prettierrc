@@ -1,0 +1,4 @@
+{
+  "attributeGroups": ["^group-a$", "^group-b$", "^group-A$", "^group-B$"],
+  "attributeIgnoreCase": false
+}

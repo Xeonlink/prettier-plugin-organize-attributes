@@ -1,4 +1,4 @@
-import { omit } from "@/utils/utils";
+import { omit } from "@/utils";
 import { estree } from ".";
 import type {
   ArrowFunctionExpression,

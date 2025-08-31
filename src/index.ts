@@ -1,29 +1,32 @@
 import type { Plugin } from "prettier";
-import { features } from "./features";
-import { builtInParsers } from "./builtin-parsers";
-import type { Prettify, UnionToIntersection } from "@/utils/type";
-
-const builtInParserArray = Object.values(builtInParsers);
-
-const options = features //
-  .map((feature) => feature.options.raw)
-  .reduce((acc, curr) => ({ ...acc, ...curr }), {});
-
-const parsers = features //
-  .map((feature) => feature.parsers)
-  .reduce((pre, cur) => ({ ...pre, ...cur(pre) }), builtInParsers);
-
-const filteredParsers = Object.fromEntries(
-  Object.entries(parsers).filter(([_, value]) => !builtInParserArray.includes(value)),
-);
+import { parsers as babelParsers } from "prettier/plugins/babel";
+import { parsers as htmlParsers } from "prettier/plugins/html";
+import { parsers as typescriptParsers } from "prettier/plugins/typescript";
+import { withEstreeParser } from "./estree";
+import { withHtmlParser } from "./html";
+import type { Options } from "./options";
+import { options } from "./options";
 
 const plugin: Plugin = {
   options: options,
-  parsers: filteredParsers,
+  parsers: {
+    // .js/.jsx
+    babel: withEstreeParser(babelParsers.babel),
+    // .ts/.tsx
+    typescript: withEstreeParser(typescriptParsers.typescript),
+    // .html
+    html: withHtmlParser(htmlParsers.html),
+    // .vue
+    vue: withHtmlParser(htmlParsers.vue),
+    // .component.html
+    angular: withHtmlParser(htmlParsers.angular),
+  },
 };
 
 export default plugin;
 
-type PluginConfig = Prettify<UnionToIntersection<(typeof features)[number]["options"]["infer"]>>;
+export type { Options as Config };
 
-export type { PluginConfig };
+declare module "prettier" {
+  interface Config extends Options {}
+}

@@ -1,8 +1,0 @@
-{
-  "singleQuote": false,
-  "semi": true,
-  "printWidth": 120,
-  "trailingComma": "all",
-
-  "sortAttribute": "on"
-}

@@ -3,9 +3,9 @@ import path from "path";
 
 export default defineConfig({
   target: "es6", // 트랜스파일 대상
-  // format: ["esm", "cjs"], // ESM + CommonJS 포맷 지원
-  format: ["esm"], // ESM + CommonJS 포맷 지원
-  outExtension: (_) => ({ js: ".mjs" }),
+  format: ["esm", "cjs"], // ESM + CommonJS 포맷 지원
+  // format: ["esm"], // ESM + CommonJS 포맷 지원
+  // outExtension: (_) => ({ js: ".mjs" }),
   entry: ["src/index.ts"], // 루트 entry 파일
   outDir: "dist", // 출력 디렉토리
 

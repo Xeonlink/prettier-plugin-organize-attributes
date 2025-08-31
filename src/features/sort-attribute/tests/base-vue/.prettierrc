@@ -1,6 +1,0 @@
-{
-  "vueIndentScriptAndStyle": false,
-
-  "sortAttribute": "on",
-  "sortAttributeGroup": ["$VUE"]
-}

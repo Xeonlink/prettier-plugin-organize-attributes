@@ -1,4 +1,0 @@
-{
-  "sortAttribute": "on",
-  "sortAttributeGroup": ["/^class$/", "/^(id|name)$/", "/^src$/", "/^aria-/"]
-}

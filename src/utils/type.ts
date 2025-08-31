@@ -43,3 +43,5 @@ export type ValueOf<T> = T[keyof T];
 export type TODO = any;
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
+
+export type LiteralUnion<T extends U, U = string> = T | (Pick<U, never> & { _?: never | undefined });
