@@ -19,7 +19,7 @@ function* sliceBySpread(attributes: JSXOpeningElement["attributes"]) {
   }
 }
 
-export const withEstreeParser = defineAstModifier<Node, Options>((node, options) => {
+export const withEstreeParser = defineAstModifier<Node, Options>("estree", (node, options) => {
   const attributeGroups = [...options.attributeGroups];
   const attributeIgnoreCase = options.attributeIgnoreCase;
   const attributeSort = options.attributeSort;

@@ -6,12 +6,10 @@ const config = {
   tabWidth: 2,
   trailingComma: "all",
   plugins: [
-    // "@trivago/prettier-plugin-sort-imports",
-    // "./dist/src/index.mjs",
-    // "prettier-plugin-vue",
-    // "prettier-plugin-merge",
-    // "./dist/merge.mjs",
+    //
+    "prettier-plugin-organize-imports",
     "prettier-plugin-package",
+    "prettier-plugin-merge",
   ],
 };
 

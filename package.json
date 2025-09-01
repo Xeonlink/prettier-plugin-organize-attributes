@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Xeonlink/prettier-plugin-organize-attributes"
+    "url": "https://github.com/Xeonlink/prettier-plugin-organize-attributes.git"
   },
   "author": {
     "name": "OH jimin",
@@ -17,18 +17,30 @@
     "url": "https://github.com/Xeonlink/prettier-plugin-organize-attributes/issues",
     "email": "jimin7020@gmail.com"
   },
-  "main": "dist/index.js",
-  "type": "commonjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
   "engines": {
     "node": ">=14.0.0"
   },
   "scripts": {
     "build": "tsup",
     "format": "prettier --write .",
-    "prettier": "tsc .prettierrc.ts",
-    "test": "vitest",
-    "tsx": "tsx"
+    "test": "vitest"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "prettier",
     "plugin",
@@ -44,7 +56,6 @@
   },
   "devDependencies": {
     "@swc/core": "^1.13.4",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/estree": "^1.0.8",
     "@types/estree-jsx": "^1.0.5",
     "@types/node": "^24.3.0",
@@ -56,11 +67,9 @@
     "prettier-plugin-package": "^2.0.0",
     "prettier-plugin-vue": "^1.1.6",
     "tsup": "^8.5.0",
-    "tsx": "^4.20.4",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4",
     "vue": "^3.5.19"
   },
-  "types": "dist/index.d.ts",
   "packageManager": "pnpm@10.5.2"
 }
