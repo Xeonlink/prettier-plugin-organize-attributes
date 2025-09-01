@@ -1,21 +1,47 @@
 {
-  "name": "prettier-plugin-organize-attributes",
+  "name": "@xeonlink/prettier-plugin-organize-attributes",
   "version": "1.0.0",
-  "description": "",
-  "type": "commonjs",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "tsx": "tsx",
-    "build": "tsup",
-    "test": "vitest",
-    "format": "prettier --write .",
-    "prettier": "tsc .prettierrc.ts"
+  "description": "Grouping html,jsx attributes and Organizing and Sorting",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xeonlink/prettier-plugin-organize-attributes"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.5.2",
+  "author": {
+    "name": "OH jimin",
+    "email": "jimin7020@gmail.com",
+    "url": "https://github.com/Xeonlink"
+  },
+  "homepage": "https://github.com/Xeonlink/prettier-plugin-organize-attributes",
+  "bugs": {
+    "url": "https://github.com/Xeonlink/prettier-plugin-organize-attributes/issues",
+    "email": "jimin7020@gmail.com"
+  },
+  "main": "dist/index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "format": "prettier --write .",
+    "prettier": "tsc .prettierrc.ts",
+    "test": "vitest",
+    "tsx": "tsx"
+  },
+  "keywords": [
+    "prettier",
+    "plugin",
+    "organize",
+    "attributes",
+    "html",
+    "angular",
+    "vue",
+    "jsx"
+  ],
+  "dependencies": {
+    "prettier": "^3.6.2"
+  },
   "devDependencies": {
     "@swc/core": "^1.13.4",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
@@ -27,6 +53,7 @@
     "angular-html-parser": "^9.2.0",
     "prettier-plugin-merge": "^0.8.0",
     "prettier-plugin-organize-imports": "^4.2.0",
+    "prettier-plugin-package": "^2.0.0",
     "prettier-plugin-vue": "^1.1.6",
     "tsup": "^8.5.0",
     "tsx": "^4.20.4",
@@ -34,7 +61,6 @@
     "vitest": "^3.2.4",
     "vue": "^3.5.19"
   },
-  "dependencies": {
-    "prettier": "^3.6.2"
-  }
+  "types": "dist/index.d.ts",
+  "packageManager": "pnpm@10.5.2"
 }

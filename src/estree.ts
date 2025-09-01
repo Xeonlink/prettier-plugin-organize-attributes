@@ -24,8 +24,10 @@ export const withEstreeParser = defineAstModifier<Node, Options>((node, options)
   const attributeIgnoreCase = options.attributeIgnoreCase;
   const attributeSort = options.attributeSort;
 
+  console.log(options);
+
   if (attributeGroups.length === 0) {
-    attributeGroups.push(PRESET.keys.$VUE);
+    attributeGroups.push(PRESET.keys.$HTML);
   }
 
   travelAst(node, (node) => {

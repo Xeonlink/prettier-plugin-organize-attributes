@@ -11,6 +11,7 @@ const config = {
     // "prettier-plugin-vue",
     // "prettier-plugin-merge",
     // "./dist/merge.mjs",
+    "prettier-plugin-package",
   ],
 };
 

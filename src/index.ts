@@ -1,4 +1,4 @@
-import type { Parser, Plugin } from "prettier";
+import type { Plugin } from "prettier";
 import { parsers as babelParsers } from "prettier/plugins/babel";
 import { parsers as htmlParsers } from "prettier/plugins/html";
 import { parsers as typescriptParsers } from "prettier/plugins/typescript";
@@ -15,6 +15,8 @@ const plugin: Plugin = {
     html: withHtmlParser(htmlParsers.html),
     vue: withHtmlParser(htmlParsers.vue),
     angular: withHtmlParser(htmlParsers.angular),
+    lwc: withHtmlParser(htmlParsers.lwc),
+    mjml: withHtmlParser(htmlParsers.mjml),
   },
 };
 
@@ -25,13 +27,3 @@ export type { Options as Config };
 declare module "prettier" {
   interface Config extends Options {}
 }
-
-const parser: Parser = {
-  astFormat: "",
-  parse: (text, options) => {
-    const ast = babelParsers.babel.parse(text, options);
-    return ast;
-  },
-  locStart: (node) => 1,
-  locEnd: (node) => 1,
-};
