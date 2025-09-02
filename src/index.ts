@@ -1,19 +1,25 @@
-import type { Plugin } from "prettier";
-import { withEstreeParser } from "./estree";
-import { withHtmlParser } from "./html";
+import type { Parser, Plugin } from "prettier";
+import { createEstreeParser } from "./estree";
+import { createHtmlParser } from "./html";
 import type { Options } from "./options";
 import { options } from "./options";
+import { createSveltParser } from "./svelt";
 
-const plugin: Plugin = {
+type BetterPlugin = Omit<Plugin, "parsers"> & {
+  parsers: Record<string, Parser | (() => Parser)>;
+};
+
+const plugin: BetterPlugin = {
   options: options,
   parsers: {
-    babel: withEstreeParser("babel"),
-    typescript: withEstreeParser("typescript"),
-    html: withHtmlParser("html"),
-    vue: withHtmlParser("vue"),
-    angular: withHtmlParser("angular"),
-    lwc: withHtmlParser("lwc"),
-    mjml: withHtmlParser("mjml"),
+    babel: createEstreeParser("babel"),
+    typescript: createEstreeParser("typescript"),
+    html: createHtmlParser("html"),
+    vue: createHtmlParser("vue"),
+    angular: createHtmlParser("angular"),
+    lwc: createHtmlParser("lwc"),
+    mjml: createHtmlParser("mjml"),
+    svelte: createSveltParser("svelte"),
   },
 };
 

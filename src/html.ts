@@ -4,7 +4,7 @@ import type { Options } from "./options";
 import { miniOrganize } from "./organize";
 import { PRESET } from "./preset";
 
-export const withHtmlParser = defineAstModifier<Node, Options>("html", (node, options) => {
+export const createHtmlParser = defineAstModifier<Node, Options>("html", (node, options) => {
   const attributeGroups = [...options.attributeGroups];
   const attributeIgnoreCase = options.attributeIgnoreCase;
   const attributeSort = options.attributeSort;
