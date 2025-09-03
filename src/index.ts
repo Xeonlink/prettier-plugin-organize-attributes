@@ -3,7 +3,7 @@ import { createEstreeParser } from "./estree";
 import { createHtmlParser } from "./html";
 import type { Options } from "./options";
 import { options } from "./options";
-import { createSveltParser } from "./svelt";
+import { createSvelteParser } from "./svelte";
 
 type BetterPlugin = Omit<Plugin, "parsers"> & {
   parsers: Record<string, Parser | (() => Parser)>;
@@ -19,7 +19,7 @@ const plugin: BetterPlugin = {
     angular: createHtmlParser("angular"),
     lwc: createHtmlParser("lwc"),
     mjml: createHtmlParser("mjml"),
-    svelte: createSveltParser("svelte"),
+    svelte: createSvelteParser("svelte"),
   },
 };
 

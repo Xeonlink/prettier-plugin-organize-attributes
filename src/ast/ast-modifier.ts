@@ -59,14 +59,14 @@ export function defineAstModifier<N extends NodeShape, O extends OptionsShape>(
           const preprocessed = lowerPriorityParser.preprocess?.(text, options) ?? text;
           return preprocessed;
         },
-        parse(text, options) {
+        async parse(text, options) {
           if (!lowerPriorityParser) {
             const plugins = options.plugins as Plugin[];
             const parser = findLowerPriorityParser(plugins, parserName);
             lowerPriorityParser = parser;
           }
 
-          const ast = lowerPriorityParser.parse(text, options);
+          const ast = await lowerPriorityParser.parse(text, options);
           modifier(ast, options as unknown as O & ParserOptions<N>);
           return ast;
         },

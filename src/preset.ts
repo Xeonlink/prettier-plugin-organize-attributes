@@ -25,6 +25,25 @@ const BASE_PRESET = {
 
   // Vue
   $VUE_ATTRIBUTE: /^v-/,
+
+  // Svelte
+  $SVELTE_THIS: /^this/,
+  $SVELTE_SLOT: /^slot/,
+  $SVELTE_STYLE_PROPS: /^--/,
+
+  // Svelte Directive
+  $SVELTE_DIRECTIVE: /^(animate|bind|class|let|on|style|transition|in|out|use):/,
+  $SVELTE_DIRECTIVE_ANIMATE: /^animate:/,
+  $SVELTE_DIRECTIVE_BIND: /^bind:/,
+  $SVELTE_DIRECTIVE_BIND_THIS: /^bind:this/,
+  $SVELTE_DIRECTIVE_CLASS: /^class:/,
+  $SVELTE_DIRECTIVE_LET: /^let:/,
+  $SVELTE_DIRECTIVE_ON: /^on:/,
+  $SVELTE_DIRECTIVE_STYLE: /^style:/,
+  $SVELTE_DIRECTIVE_TRANSITION: /^transition:/,
+  $SVELTE_DIRECTIVE_IN: /^in:/,
+  $SVELTE_DIRECTIVE_OUT: /^out:/,
+  $SVELTE_DIRECTIVE_USE: /^use:/,
 } satisfies Record<`$${string}`, RegExp>;
 
 const PRESET_GROUPS = {
@@ -74,6 +93,29 @@ const PRESET_GROUPS = {
     BASE_PRESET.$CLASS,
     BASE_PRESET.$ID,
     BASE_PRESET.$VUE_ATTRIBUTE,
+  ],
+  /**
+   * eslint-plugin-svelte
+   *
+   * @link https://sveltejs.github.io/eslint-plugin-svelte/rules/sort-attributes/
+   */
+  $SVELTE: [
+    BASE_PRESET.$SVELTE_THIS,
+    BASE_PRESET.$SVELTE_DIRECTIVE_BIND_THIS,
+    BASE_PRESET.$ID,
+    BASE_PRESET.$NAME,
+    BASE_PRESET.$SVELTE_SLOT,
+    BASE_PRESET.$SVELTE_STYLE_PROPS,
+    /^style:?/,
+    /^class[^:]?/,
+    BASE_PRESET.$SVELTE_DIRECTIVE_CLASS,
+    /^(bind:|on:)/,
+    BASE_PRESET.$SVELTE_DIRECTIVE_USE,
+    BASE_PRESET.$SVELTE_DIRECTIVE_TRANSITION,
+    BASE_PRESET.$SVELTE_DIRECTIVE_IN,
+    BASE_PRESET.$SVELTE_DIRECTIVE_OUT,
+    BASE_PRESET.$SVELTE_DIRECTIVE_ANIMATE,
+    BASE_PRESET.$SVELTE_DIRECTIVE_LET,
   ],
 } satisfies Record<`$${string}`, RegExp[]>;
 

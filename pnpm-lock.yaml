@@ -42,6 +42,9 @@ importers:
       prettier-plugin-package:
         specifier: ^2.0.0
         version: 2.0.0(prettier@3.6.2)
+      prettier-plugin-svelte:
+        specifier: ^3.4.0
+        version: 3.4.0(prettier@3.6.2)(svelte@5.38.6)
       prettier-plugin-vue:
         specifier: ^1.1.6
         version: 1.1.6
@@ -860,6 +863,12 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       prettier: ^3.0.0
+
+  prettier-plugin-svelte@3.4.0:
+    resolution: {integrity: sha512-pn1ra/0mPObzqoIQn/vUTR3ZZI6UuZ0sHqMK5x2jMLGrs53h0sXhkVuDcrlssHwIMk7FYrMjHBPoUSyyEEDlBQ==}
+    peerDependencies:
+      prettier: ^3.0.0
+      svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
 
   prettier-plugin-vue@1.1.6:
     resolution: {integrity: sha512-trQ/oY+6hSsGe2zPIFThXMIM0TbxMEbk2VOrKjwHWuSz7OEo0rnumbz9a47OxVPCaAnGY9vZG8qDTiTmk9bq0A==}
@@ -1793,6 +1802,11 @@ snapshots:
   prettier-plugin-package@2.0.0(prettier@3.6.2):
     dependencies:
       prettier: 3.6.2
+
+  prettier-plugin-svelte@3.4.0(prettier@3.6.2)(svelte@5.38.6):
+    dependencies:
+      prettier: 3.6.2
+      svelte: 5.38.6
 
   prettier-plugin-vue@1.1.6:
     dependencies:
