@@ -1,5 +1,3 @@
-<br/>
-
 <p align='center'>
   <img src="https://capsule-render.vercel.app/api?type=waving&color=FFFFFF&height=260&section=header&text=prettier-plugin-organize-attributes&fontSize=44&animation=fadeIn&fontAlignY=32&desc=organize+attributes+automatically&descAlignY=48&descAlign=50"/>
 </p>
