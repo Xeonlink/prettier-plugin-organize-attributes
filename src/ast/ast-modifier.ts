@@ -1,3 +1,4 @@
+import { isPromise } from "util/types";
 import type { BuiltInParserName, Parser, ParserOptions, Plugin } from "prettier";
 
 type NodeShape = { type: string | number };
@@ -5,7 +6,10 @@ type OptionsShape = Record<string, string | number | string[] | number[] | boole
 type Modifier<N extends NodeShape, O extends OptionsShape> = (node: N, options: O & ParserOptions<N>) => void;
 type BuiltInParserNameAndElse = BuiltInParserName | (string & {});
 
-function findLowerPriorityParser(plugins: Plugin[], parserName: BuiltInParserNameAndElse) {
+function findLowerPriorityParser(
+  plugins: Plugin[],
+  parserName: BuiltInParserNameAndElse,
+): Parser | (() => Parser | Promise<Parser>) {
   const parser = plugins
     .map((plugin) => plugin.parsers?.[parserName])
     .filter((parser) => parser !== undefined)
@@ -23,7 +27,7 @@ export function defineAstModifier<N extends NodeShape, O extends OptionsShape>(
   modifier: Modifier<N, O>,
 ) {
   return (parserName: BuiltInParserNameAndElse) => {
-    let lowerPriorityParser: Parser | undefined;
+    let lowerPriorityParser: Parser | Promise<Parser> | (() => Parser | Promise<Parser>) | undefined;
 
     // parserInitFunction
     return (): Parser => {
@@ -32,28 +36,74 @@ export function defineAstModifier<N extends NodeShape, O extends OptionsShape>(
           if (!lowerPriorityParser) {
             throw new Error("Lower priority parser not found");
           }
-
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
+          if (typeof lowerPriorityParser === "function") {
+            lowerPriorityParser = lowerPriorityParser();
+          }
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
           return lowerPriorityParser.locEnd(node);
         },
         locStart(node) {
           if (!lowerPriorityParser) {
             throw new Error("Lower priority parser not found");
           }
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
+          if (typeof lowerPriorityParser === "function") {
+            lowerPriorityParser = lowerPriorityParser();
+          }
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
 
           return lowerPriorityParser.locStart(node);
         },
         hasPragma(text) {
-          return lowerPriorityParser?.hasPragma?.(text) ?? false;
+          if (!lowerPriorityParser) {
+            throw new Error("Lower priority parser not found");
+          }
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
+          if (typeof lowerPriorityParser === "function") {
+            lowerPriorityParser = lowerPriorityParser();
+          }
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
+
+          return lowerPriorityParser.hasPragma?.(text) ?? false;
         },
         hasIgnorePragma(text) {
-          return lowerPriorityParser?.hasIgnorePragma?.(text) ?? false;
+          if (!lowerPriorityParser) {
+            throw new Error("Lower priority parser not found");
+          }
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
+          if (typeof lowerPriorityParser === "function") {
+            lowerPriorityParser = lowerPriorityParser();
+          }
+          if (isPromise(lowerPriorityParser)) {
+            throw new Error("Lower priority parser is a promise");
+          }
+          return lowerPriorityParser.hasIgnorePragma?.(text) ?? false;
         },
         async parse(originalText, options) {
           if (!lowerPriorityParser) {
             const plugins = options.plugins as Plugin[];
-            const parser = findLowerPriorityParser(plugins, parserName);
-            const temp = typeof parser === "function" ? (parser as () => Promise<Parser>)() : parser;
-            lowerPriorityParser = (await temp) as Parser;
+            lowerPriorityParser = findLowerPriorityParser(plugins, parserName);
+          }
+          if (typeof lowerPriorityParser === "function") {
+            lowerPriorityParser = lowerPriorityParser();
+          }
+          if (isPromise(lowerPriorityParser)) {
+            lowerPriorityParser = await lowerPriorityParser;
           }
 
           const preprocessor = lowerPriorityParser.preprocess ?? ((text, _) => text);

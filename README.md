@@ -26,7 +26,13 @@ npm i -D @xeonlink/prettier-plugin-organize-attributes
   - [prettier-plugin-tailwindcss](#prettier-plugin-tailwindcss)
   - [prettier-plugin-svelte](#svelte)
 
-## ⚙️ Options
+## ⚙️ Configuration
+
+| API Option            | CLI Option                | Default  | Type                        |
+| --------------------- | ------------------------- | :------: | --------------------------- |
+| `attributeGroups`     | `--attribute-groups`      |   `[]`   | string[]                    |
+| `attributeSort`       | `--attribute-sort`        | `"NONE"` | `"NONE"`, `"ASC"`, `"DESC"` |
+| `attributeIgnoreCase` | `--attribute-ignore-case` | `false`  | boolean                     |
 
 ### attributeGroups
 

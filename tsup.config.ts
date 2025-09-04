@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 import path from "path";
 
 export default defineConfig({
-  target: "es6", // 트랜스파일 대상
+  target: "es2018", // 트랜스파일 대상
   format: ["esm", "cjs"], // ESM + CommonJS 포맷 지원
   // format: ["esm"], // ESM + CommonJS 포맷 지원
   // outExtension: (_) => ({ js: ".mjs" }),
