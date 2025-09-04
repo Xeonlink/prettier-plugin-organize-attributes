@@ -1,15 +1,15 @@
 <br/>
-<div align="center">
+<!-- <div align="center">
   <img src="title.png" alt="title" style="max-width: 100%; width: 600px;" />  
-</div>
+</div> -->
 
-<!-- <div id="toc" align="center">
+<div id="toc" align="center">
   <ul style="list-style: none">
     <summary>
       <h1>prettier-plugin-organize-attributes</h1>
     </summary>
   </ul>
-</div> -->
+</div>
 
 <br/>
 
@@ -21,9 +21,9 @@
   <img src="https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white" alt="Svelte" />
 </div>
 
-<div align="center">
+<!-- <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&height=30&pause=1000&color=808080&center=true&vCenter=true&lines=Organize+attributes+with+Prettier" alt="Kaptch Subtitle" />
-</div>
+</div> -->
 
 ## 📖 Overview
 
