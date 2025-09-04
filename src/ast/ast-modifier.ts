@@ -1,4 +1,3 @@
-import type { Prettify } from "@/utils/type";
 import type { BuiltInParserName, Parser, ParserOptions, Plugin } from "prettier";
 
 type NodeShape = { type: string | number };

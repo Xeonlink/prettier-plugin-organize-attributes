@@ -1,5 +1,5 @@
 import type { Options } from "./options";
-import { PRESET } from "./preset";
+import { PRESET } from "./presets";
 import type { LowerFirst } from "./utils/type";
 
 export const DEFAULT_GROUP = "$DEFAULT";

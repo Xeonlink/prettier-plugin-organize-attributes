@@ -51,6 +51,9 @@
     "vue",
     "jsx"
   ],
+  "dependencies": {
+    "prettier": "^3.6.2"
+  },
   "devDependencies": {
     "@swc/core": "^1.13.4",
     "@types/estree": "^1.0.8",
@@ -70,8 +73,5 @@
     "vitest": "^3.2.4",
     "vue": "^3.5.19"
   },
-  "packageManager": "pnpm@10.5.2",
-  "dependencies": {
-    "prettier": "^3.6.2"
-  }
+  "packageManager": "pnpm@10.5.2"
 }

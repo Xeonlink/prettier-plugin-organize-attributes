@@ -3,7 +3,7 @@ import type { JSXAttribute, JSXOpeningElement, JSXSpreadAttribute, Node } from "
 import { getJSXAttributeKey } from "@/ast/estree";
 import type { Options } from "./options";
 import { miniOrganize } from "./organize";
-import { PRESET } from "./preset";
+import { PRESET } from "./presets";
 
 function* sliceBySpread(attributes: JSXOpeningElement["attributes"]) {
   const result = [...attributes];

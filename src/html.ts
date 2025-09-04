@@ -2,7 +2,7 @@ import { defineAstModifier, travelAst } from "@/ast";
 import type { Node } from "@/ast/html";
 import type { Options } from "./options";
 import { miniOrganize } from "./organize";
-import { PRESET } from "./preset";
+import { PRESET } from "./presets";
 
 export const createHtmlParser = defineAstModifier<Node, Options>("html", (node, options) => {
   const attributeGroups = [...options.attributeGroups];

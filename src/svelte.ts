@@ -11,7 +11,7 @@ import type {
 } from "./ast/svelt";
 import type { Options } from "./options";
 import { miniOrganize } from "./organize";
-import { PRESET } from "./preset";
+import { PRESET } from "./presets";
 import type { ValueOf } from "./utils/type";
 
 type ElementLike = ValueOf<{
