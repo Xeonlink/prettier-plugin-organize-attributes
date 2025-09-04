@@ -1,24 +1,20 @@
 <br/>
 
-<div id="toc" align="center">
-  <ul style="list-style: none">
-    <summary>
-      <h1>prettier-plugin-organize-attributes</h1>
-    </summary>
-  </ul>
-</div>
+<p align='center'>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=F0F0F0&height=260&section=header&text=prettier-plugin-organize-attributes&fontSize=44&animation=fadeIn&fontAlignY=32&desc=organize+attributes+automatically&descAlignY=48&descAlign=50"/>
+</p>
 
-<div align="center">
+## 📖 Overview
+
+This project is based on [prettier-plugin-organize-attributes](https://github.com/NiklasPor/prettier-plugin-organize-attributes), but adds additional features
+
+<div>
   <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML" />
   <img src="https://img.shields.io/badge/JSX-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="JSX" />
   <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
   <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue.js" />
   <img src="https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white" alt="Svelte" />
 </div>
-
-## 📖 Overview
-
-This project is based on [prettier-plugin-organize-attributes](https://github.com/NiklasPor/prettier-plugin-organize-attributes), but adds additional features
 
 ```bash
 npm i -D @xeonlink/prettier-plugin-organize-attributes
