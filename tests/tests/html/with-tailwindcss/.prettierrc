@@ -1,0 +1,4 @@
+{
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "attributeGroups": ["^class$", "^(id|name)$", "$DEFAULT", "^aria-"]
+}

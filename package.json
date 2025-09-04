@@ -1,7 +1,7 @@
 {
   "name": "@xeonlink/prettier-plugin-organize-attributes",
   "version": "1.0.0",
-  "description": "Grouping html,jsx attributes and Organizing and Sorting",
+  "description": "Organize attributes automatically in your HTML like files with Prettier",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -66,6 +66,7 @@
     "prettier-plugin-organize-imports": "^4.2.0",
     "prettier-plugin-package": "^2.0.0",
     "prettier-plugin-svelte": "^3.4.0",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "prettier-plugin-vue": "^1.1.6",
     "svelte": "^5.38.6",
     "tsup": "^8.5.0",

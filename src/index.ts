@@ -9,21 +9,23 @@ type BetterPlugin = Omit<Plugin, "parsers"> & {
   parsers: Record<string, Parser | (() => Parser)>;
 };
 
-const plugin: BetterPlugin = {
-  options: options,
-  parsers: {
-    babel: createEstreeParser("babel"),
-    typescript: createEstreeParser("typescript"),
-    html: createHtmlParser("html"),
-    vue: createHtmlParser("vue"),
-    angular: createHtmlParser("angular"),
-    lwc: createHtmlParser("lwc"),
-    mjml: createHtmlParser("mjml"),
-    svelte: createSvelteParser("svelte"),
-  },
-};
+export function createPlugin(): BetterPlugin {
+  return {
+    options: options,
+    parsers: {
+      babel: createEstreeParser("babel"),
+      typescript: createEstreeParser("typescript"),
+      html: createHtmlParser("html"),
+      vue: createHtmlParser("vue"),
+      angular: createHtmlParser("angular"),
+      lwc: createHtmlParser("lwc"),
+      mjml: createHtmlParser("mjml"),
+      svelte: createSvelteParser("svelte"),
+    },
+  };
+}
 
-export default plugin;
+export default createPlugin();
 
 export type { Options as Config };
 

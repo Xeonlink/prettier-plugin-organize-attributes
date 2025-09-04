@@ -48,24 +48,20 @@ export function defineAstModifier<N extends NodeShape, O extends OptionsShape>(
         hasIgnorePragma(text) {
           return lowerPriorityParser?.hasIgnorePragma?.(text) ?? false;
         },
-        preprocess(text, options) {
+        async parse(originalText, options) {
           if (!lowerPriorityParser) {
             const plugins = options.plugins as Plugin[];
             const parser = findLowerPriorityParser(plugins, parserName);
-            lowerPriorityParser = parser;
+            const temp = typeof parser === "function" ? (parser as () => Promise<Parser>)() : parser;
+            lowerPriorityParser = (await temp) as Parser;
           }
 
-          const preprocessed = lowerPriorityParser.preprocess?.(text, options) ?? text;
-          return preprocessed;
-        },
-        async parse(text, options) {
-          if (!lowerPriorityParser) {
-            const plugins = options.plugins as Plugin[];
-            const parser = findLowerPriorityParser(plugins, parserName);
-            lowerPriorityParser = parser;
-          }
+          const preprocessor = lowerPriorityParser.preprocess ?? ((text, _) => text);
+          const text = preprocessor(originalText, options);
+          options.originalText = text;
 
           const ast = await lowerPriorityParser.parse(text, options);
+
           modifier(ast, options as unknown as O & ParserOptions<N>);
           return ast;
         },
