@@ -1,25 +1,18 @@
-<br/>
-<div align="center">
-  <img src="title.png" alt="title" style="max-width: 100%; width: 600px;" />  
-</div>
+<p align='center'>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=FFFFFF&height=260&section=header&text=prettier-plugin-organize-attributes&fontSize=44&animation=fadeIn&fontAlignY=32&desc=organize+attributes+automatically&descAlignY=48&descAlign=50"/>
+</p>
 
-<br/>
+## 📖 Overview
 
-<div align="center">
+This project is based on [prettier-plugin-organize-attributes](https://github.com/NiklasPor/prettier-plugin-organize-attributes), but adds additional features
+
+<div>
   <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML" />
   <img src="https://img.shields.io/badge/JSX-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="JSX" />
   <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
   <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue.js" />
   <img src="https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white" alt="Svelte" />
 </div>
-
-<div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&height=30&pause=1000&color=808080&center=true&vCenter=true&lines=Organize+attributes+with+Prettier" alt="Kaptch Subtitle" />
-</div>
-
-## 📖 Overview
-
-This project is based on [prettier-plugin-organize-attributes](https://github.com/NiklasPor/prettier-plugin-organize-attributes), but adds additional features
 
 ```bash
 npm i -D @xeonlink/prettier-plugin-organize-attributes
@@ -97,7 +90,7 @@ npm i -D @xeonlink/prettier-plugin-organize-attributes
 {
   "plugins": ["@xeonlink/prettier-plugin-organize-attributes"],
   "attributeGroups": ["^group-a$", "^group-b$", "^group-A$", "^group-B$"],
-  "attributeIgnoreCase": false // default true
+  "attributeIgnoreCase": false
 }
 ```
 
@@ -122,7 +115,7 @@ This [plugin](#overview) works by dynamically importing and calling parsers from
 ```json
 {
   "plugins": [
-    "prettier-plugin-tailwindcss", // call relevant parser
+    "prettier-plugin-tailwindcss",
     "@xeonlink/prettier-plugin-organize-attributes"
   ]
 }
@@ -134,7 +127,7 @@ This [plugin](#overview) works by dynamically importing and calling parsers from
 ```json
 {
   "plugins": [
-    "prettier-plugin-svelte", // call svelte parser
+    "prettier-plugin-svelte",
     "@xeonlink/prettier-plugin-organize-attributes"
   ]
 }
