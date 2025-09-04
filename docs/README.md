@@ -90,7 +90,7 @@ npm i -D @xeonlink/prettier-plugin-organize-attributes
 {
   "plugins": ["@xeonlink/prettier-plugin-organize-attributes"],
   "attributeGroups": ["^group-a$", "^group-b$", "^group-A$", "^group-B$"],
-  "attributeIgnoreCase": false // default true
+  "attributeIgnoreCase": false
 }
 ```
 
@@ -115,7 +115,7 @@ This [plugin](#overview) works by dynamically importing and calling parsers from
 ```json
 {
   "plugins": [
-    "prettier-plugin-tailwindcss", // call relevant parser
+    "prettier-plugin-tailwindcss",
     "@xeonlink/prettier-plugin-organize-attributes"
   ]
 }
@@ -127,7 +127,7 @@ This [plugin](#overview) works by dynamically importing and calling parsers from
 ```json
 {
   "plugins": [
-    "prettier-plugin-svelte", // call svelte parser
+    "prettier-plugin-svelte",
     "@xeonlink/prettier-plugin-organize-attributes"
   ]
 }
