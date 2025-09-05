@@ -1,6 +1,6 @@
 {
   "name": "@xeonlink/prettier-plugin-organize-attributes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Organize attributes automatically in your HTML like files with Prettier",
   "license": "MIT",
   "repository": {

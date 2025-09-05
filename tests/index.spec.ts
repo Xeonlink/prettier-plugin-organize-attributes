@@ -1,7 +1,7 @@
+import { createPlugin } from "@/create";
 import { Path } from "@/utils/path";
 import prettier from "prettier";
 import { describe, expect, test } from "vitest";
-import { createPlugin } from "@/index";
 
 const testsPath = new Path(__dirname, "tests");
 

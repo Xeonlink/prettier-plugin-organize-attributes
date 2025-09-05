@@ -9,7 +9,6 @@ const config = {
     //
     "prettier-plugin-organize-imports",
     "prettier-plugin-package",
-    "prettier-plugin-merge",
   ],
 };
 

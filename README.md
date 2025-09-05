@@ -18,15 +18,16 @@ This project is based on [prettier-plugin-organize-attributes](https://github.co
 npm i -D @xeonlink/prettier-plugin-organize-attributes
 ```
 
-- [Options](#options)
+- [⚙️ Options](#Options)
   - [attributeGroups](#attributegroups)
   - [attributeSort](#attributesort)
   - [attributeIgnoreCase](#attributeignorecase)
-- [Compatability](#compatibility)
+  - [typesafety](#typesafety)
+- [🔗 Compatability](#Compatibility)
   - [prettier-plugin-tailwindcss](#prettier-plugin-tailwindcss)
-  - [prettier-plugin-svelte](#svelte)
+  - [prettier-plugin-svelte](#prettier-plugin-svelte)
 
-## ⚙️ Configuration
+## ⚙️ Options
 
 | API Option            | CLI Option                | Default  | Type                        |
 | --------------------- | ------------------------- | :------: | --------------------------- |
@@ -110,6 +111,19 @@ npm i -D @xeonlink/prettier-plugin-organize-attributes
 
 - Sets whether the group's regular expression is case-sensitive.
 - This option defaults to `true`, so if the option is not specified, the regular expression is case-insensitive.
+
+### typesafety
+
+```js
+/** @type {import('prettier').Config & import('@xeonlink/prettier-plugin-organize-attributes').Config} */
+const config = {
+  plugins: ["prettier-plugin-tailwindcss", "@xeonlink/prettier-plugin-organize-attributes"],
+};
+
+export default config;
+```
+
+When using a JavaScript config, you can import the types for IntelliSense
 
 ## 🔗 Compatibility
 
