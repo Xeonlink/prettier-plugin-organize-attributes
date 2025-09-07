@@ -27,6 +27,7 @@ npm i -D @xeonlink/prettier-plugin-organize-attributes
 - [🔗 Compatability](#Compatibility)
   - [prettier-plugin-tailwindcss](#prettier-plugin-tailwindcss)
   - [prettier-plugin-svelte](#prettier-plugin-svelte)
+  - [prettier-plugin-astro](#prettier-plugin-astro)
 
 ## ⚙️ Options
 
@@ -155,7 +156,7 @@ This [plugin](#overview) works by dynamically importing and calling parsers from
 }
 ```
 
-### prettier-plugin-svelte
+### prettier-plugin-astro
 
 <!-- prettier-ignore -->
 ```json
