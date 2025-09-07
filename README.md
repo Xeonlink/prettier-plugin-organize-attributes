@@ -12,6 +12,7 @@ This project is based on [prettier-plugin-organize-attributes](https://github.co
   <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
   <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue.js" />
   <img src="https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white" alt="Svelte" />
+  <img src="https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white" alt="Astro" />
 </div>
 
 ```bash
@@ -149,6 +150,18 @@ This [plugin](#overview) works by dynamically importing and calling parsers from
 {
   "plugins": [
     "prettier-plugin-svelte",
+    "@xeonlink/prettier-plugin-organize-attributes"
+  ]
+}
+```
+
+### prettier-plugin-svelte
+
+<!-- prettier-ignore -->
+```json
+{
+  "plugins": [
+    "prettier-plugin-astro",
     "@xeonlink/prettier-plugin-organize-attributes"
   ]
 }

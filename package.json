@@ -1,6 +1,6 @@
 {
   "name": "@xeonlink/prettier-plugin-organize-attributes",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Organize attributes automatically in your HTML like files with Prettier",
   "license": "MIT",
   "repository": {
@@ -56,6 +56,7 @@
     "prettier": "^3.6.2"
   },
   "devDependencies": {
+    "@astrojs/compiler": "^2.12.2",
     "@swc/core": "^1.13.4",
     "@types/estree": "^1.0.8",
     "@types/estree-jsx": "^1.0.5",
@@ -63,6 +64,8 @@
     "@types/react": "^19.1.10",
     "@vitest/ui": "^3.2.4",
     "angular-html-parser": "^9.2.0",
+    "astro": "^5.13.5",
+    "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.2.0",
     "prettier-plugin-package": "^2.0.0",
     "prettier-plugin-svelte": "^3.4.0",

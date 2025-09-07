@@ -1,0 +1,43 @@
+---
+export interface Props {
+  text: string;
+  disabled?: boolean;
+  id?: string;
+  'data-action'?: string;
+  'data-count'?: number;
+  'data-theme'?: string;
+  'data-step'?: number;
+  'aria-label'?: string;
+  tabindex?: string;
+  title?: string;
+}
+
+const { 
+  text, 
+  disabled = false,
+  id,
+  'data-action': dataAction,
+  'data-count': dataCount,
+  'data-theme': dataTheme,
+  'data-step': dataStep,
+  'aria-label': ariaLabel,
+  tabindex,
+  title
+} = Astro.props;
+---
+
+<button 
+  id={id}
+  class="counter-button"
+  disabled={disabled}
+  aria-label={ariaLabel || `${text} button`}
+  role="button"
+  tabindex={tabindex || (disabled ? -1 : 0)}
+  title={title}
+  data-action={dataAction}
+  data-count={dataCount}
+  data-theme={dataTheme}
+  data-step={dataStep}
+>
+  {text}
+</button>

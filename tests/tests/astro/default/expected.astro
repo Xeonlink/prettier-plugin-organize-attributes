@@ -1,0 +1,60 @@
+---
+// Astro component with all features
+interface Props {
+  initialValue?: number;
+  step?: number;
+  disabled?: boolean;
+  showHistory?: boolean;
+  theme?: "light" | "dark";
+}
+
+const {
+  initialValue = 0,
+  step = 1,
+  disabled = false,
+  showHistory = false,
+  theme = "light",
+} = Astro.props as Props;
+
+const count = initialValue;
+const isEven = count % 2 === 0;
+---
+
+<div
+  aria-label={`Theme: ${theme}, Count: ${count}, Step: ${step}`}
+  aria-label="Combined directive button"
+  class={`theme-${theme}`}
+  class="combined-button"
+  class:list={["active", isEven && "even", disabled && "disabled"]}
+  data-count={count}
+  data-show-history={showHistory}
+  data-step={step}
+  data-theme={theme}
+  id="theme-display"
+  id="combined-directive-button"
+  role="region"
+  role="button"
+  tabindex="0"
+  tabindex="0"
+  transition:animate="fade"
+>
+  Theme: {theme}
+  {
+    showHistory && (
+      <section
+        aria-label="Counter history"
+        class="counter-history"
+        id="counter-history-section"
+      >
+        <li
+          aria-current="true"
+          class="history-item current"
+          id="current-history-item"
+          role="listitem"
+        >
+          Current: {count}
+        </li>
+      </section>
+    )
+  }
+</div>
