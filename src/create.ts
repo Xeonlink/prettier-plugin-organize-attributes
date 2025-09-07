@@ -1,4 +1,5 @@
 import type { Parser, Plugin } from "prettier";
+import { createAstroParser } from "./astro";
 import { createEstreeParser } from "./estree";
 import { createHtmlParser } from "./html";
 import { options as optionsBase } from "./options";
@@ -20,6 +21,7 @@ export function createPlugin(): BetterPlugin {
       lwc: createHtmlParser("lwc"),
       mjml: createHtmlParser("mjml"),
       svelte: createSvelteParser("svelte"),
+      astro: createAstroParser("astro"),
     },
   };
 }

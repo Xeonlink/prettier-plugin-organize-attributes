@@ -44,6 +44,15 @@ const BASE_PRESET = {
   $SVELTE_DIRECTIVE_IN: /^in:/,
   $SVELTE_DIRECTIVE_OUT: /^out:/,
   $SVELTE_DIRECTIVE_USE: /^use:/,
+
+  // Astro
+  $ASTRO_CLASS: /^class:?/,
+  $ASTRO_DIRECTIVE_SET: /^set:/,
+  $ASTRO_DIRECTIVE_CLIENT: /^client:/,
+  $ASTRO_DIRECTIVE_SERVER: /^server:/,
+  $ASTRO_DIRECTIVE_IS: /^is:/,
+  $ASTRO_DIRECTIVE_TRANSITION: /^transition:/,
+  $ASTRO_DIRECTIVE: /^(set|client|server|is|transition):/,
 } satisfies Record<`$${string}`, RegExp>;
 
 const PRESET_GROUPS = {
@@ -117,6 +126,10 @@ const PRESET_GROUPS = {
     BASE_PRESET.$SVELTE_DIRECTIVE_ANIMATE,
     BASE_PRESET.$SVELTE_DIRECTIVE_LET,
   ],
+  /**
+   * @rule https://ota-meshi.github.io/eslint-plugin-astro/rules/sort-attributes/
+   */
+  // no rule
 } satisfies Record<`$${string}`, RegExp[]>;
 
 const MERGED_PRESET = {
