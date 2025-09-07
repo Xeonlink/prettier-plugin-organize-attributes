@@ -55,7 +55,7 @@ npm i -D @xeonlink/prettier-plugin-organize-attributes
 - Groups attributes by name.
 - Groups are expressed using regular expressions, and attributes that satisfy the regular expression are grouped together.
 - If an attribute name satisfies multiple regular expressions, it belongs to the group that comes first.
-- There are predefined [`PRESET`](../src/presets.ts) configurations.
+- There are predefined [`PRESET`](src/presets.ts) configurations.
 - If an attribute doesn't belong to any group, it belongs to the `$DEFAULT` group.
 
 ---
@@ -117,7 +117,8 @@ npm i -D @xeonlink/prettier-plugin-organize-attributes
 ```js
 /** @type {import('prettier').Config & import('@xeonlink/prettier-plugin-organize-attributes').Config} */
 const config = {
-  plugins: ["prettier-plugin-tailwindcss", "@xeonlink/prettier-plugin-organize-attributes"],
+  plugins: ["@xeonlink/prettier-plugin-organize-attributes"],
+  attributeSort: "ASC",
 };
 
 export default config;
