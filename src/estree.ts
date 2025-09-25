@@ -1,7 +1,7 @@
 import { defineAstModifier, travelAst } from "@/ast";
 import type { JSXAttribute, JSXOpeningElement, JSXSpreadAttribute, Node } from "@/ast/estree";
 import { getJSXAttributeKey } from "@/ast/estree";
-import type { Options } from "./options";
+import type { PluginOptions } from "./options";
 import { miniOrganize } from "./organize";
 import { PRESET } from "./presets";
 
@@ -19,7 +19,7 @@ function* sliceBySpread(attributes: JSXOpeningElement["attributes"]) {
   }
 }
 
-export const createEstreeParser = defineAstModifier<Node, Options>("estree", (node, options) => {
+export const createEstreeParser = defineAstModifier<Node, PluginOptions>("estree", (node, options) => {
   const attributeGroups = [...options.attributeGroups];
   const attributeIgnoreCase = options.attributeIgnoreCase;
   const attributeSort = options.attributeSort;

@@ -1,6 +1,6 @@
 import { defineAstModifier, travelAst } from "@/ast";
 import type { AttributeNode, Node } from "@/ast/astro";
-import type { Options } from "./options";
+import type { PluginOptions } from "./options";
 import { miniOrganize } from "./organize";
 import type { ValueOf } from "./utils/type";
 
@@ -37,7 +37,7 @@ function* sliceBySpread(attributes: AttributeNode[]) {
   }
 }
 
-export const createAstroParser = defineAstModifier<Node, Options>("astro", (node, options) => {
+export const createAstroParser = defineAstModifier<Node, PluginOptions>("astro", (node, options) => {
   const attributeGroups = [...options.attributeGroups];
   const attributeIgnoreCase = options.attributeIgnoreCase;
   const attributeSort = options.attributeSort;

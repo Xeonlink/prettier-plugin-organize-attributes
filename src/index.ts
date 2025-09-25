@@ -1,5 +1,5 @@
 import { createPlugin } from "./create";
-import type { Options } from "./options";
+import type { PluginOptions } from "./options";
 
 const plugin = createPlugin();
 
@@ -9,4 +9,9 @@ export const options = plugin.options;
 
 export const parsers = plugin.parsers;
 
-export type { Options as Config };
+export type { PluginOptions as Config };
+
+declare module "prettier" {
+  interface RequiredOptions extends PluginOptions {}
+  interface ParserOptions extends PluginOptions {}
+}

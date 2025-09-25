@@ -1,10 +1,10 @@
 import { defineAstModifier, travelAst } from "@/ast";
 import type { Node } from "@/ast/html";
-import type { Options } from "./options";
+import type { PluginOptions } from "./options";
 import { miniOrganize } from "./organize";
 import { PRESET } from "./presets";
 
-export const createHtmlParser = defineAstModifier<Node, Options>("html", (node, options) => {
+export const createHtmlParser = defineAstModifier<Node, PluginOptions>("html", (node, options) => {
   const attributeGroups = [...options.attributeGroups];
   const attributeIgnoreCase = options.attributeIgnoreCase;
   const attributeSort = options.attributeSort;

@@ -10,6 +10,7 @@ const config = {
     "prettier-plugin-organize-imports",
     "prettier-plugin-package",
   ],
+  organizeImportsSkipDestructiveCodeActions: true,
 };
 
 export default config;

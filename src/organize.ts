@@ -1,4 +1,4 @@
-import type { Options } from "./options";
+import type { PluginOptions } from "./options";
 import { PRESET } from "./presets";
 import type { LowerFirst } from "./utils/type";
 
@@ -68,7 +68,9 @@ function trySorting<T>(groupDefs: GroupDef<T>[], sort: MiniOrganizeParams<T>["so
 }
 
 type MiniOrganizeParams<T> = {
-  [key in keyof Options as key extends `attribute${infer K extends string}` ? LowerFirst<K> : never]: Options[key];
+  [key in keyof PluginOptions as key extends `attribute${infer K extends string}`
+    ? LowerFirst<K>
+    : never]: PluginOptions[key];
 } & {
   getKey: (node: T) => string;
 };

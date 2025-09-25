@@ -46,4 +46,4 @@ export const options = defineOptions({
   },
 });
 
-export type Options = InferOptions<typeof options>;
+export type PluginOptions = InferOptions<typeof options>;

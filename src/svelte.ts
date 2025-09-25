@@ -9,7 +9,7 @@ import type {
   StyleDirectiveNode,
   TransitionNode,
 } from "./ast/svelt";
-import type { Options } from "./options";
+import type { PluginOptions } from "./options";
 import { miniOrganize } from "./organize";
 import { PRESET } from "./presets";
 import type { ValueOf } from "./utils/type";
@@ -81,7 +81,7 @@ function* sliceBySpread(attributes: AttributeCandidate[]) {
   }
 }
 
-export const createSvelteParser = defineAstModifier<Node, Options>("svelte-ast", (node, options) => {
+export const createSvelteParser = defineAstModifier<Node, PluginOptions>("svelte-ast", (node, options) => {
   const attributeGroups = [...options.attributeGroups];
   const attributeIgnoreCase = options.attributeIgnoreCase;
   const attributeSort = options.attributeSort;
