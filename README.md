@@ -4,6 +4,8 @@
 
 ## 📖 Overview
 
+<img src='docs/ci.png' width="120" style="border-radius: 10%" />
+
 This project is based on [prettier-plugin-organize-attributes](https://github.com/NiklasPor/prettier-plugin-organize-attributes), but adds additional features
 
 <div>
